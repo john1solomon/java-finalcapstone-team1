@@ -63,7 +63,7 @@
     background-image: url('../assets/backgroundtest.jpg');
     background-size: cover;
     background-position: center;
-    color:hotpink;
+    color:ghostwhite;
     text-align: center;
     padding: 4rem 0;
   }
