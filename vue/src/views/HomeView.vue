@@ -11,8 +11,10 @@
 
 <script>
 import Header from '../components/Header.vue';
-import Feature from '../components/Feature.vue';
+import Feature from '@/components/Feature.vue';
 import Footer from '../components/Footer.vue';
+
+
 
 
 

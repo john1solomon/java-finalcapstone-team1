@@ -2,7 +2,6 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-links">
-            <router-link to="/about" class="footer-link">About Us</router-link>
             <router-link to="/contact" class="footer-link">Contact</router-link>
         </div>
         <p class="copyright">&copy; 2024 NorthCoast BeerFinder. All Rights Reserved.</p>
@@ -21,7 +20,8 @@ export default {
 .footer {
     background-color: #333;
     color:#fff;
-    padding: 2rem 0;
+    padding: 0.5rem 0;
+    
     
 }
 
@@ -31,6 +31,7 @@ export default {
     display: flex;
     justify-content:space-between;
     align-items: center;
+    
     
 
 }
