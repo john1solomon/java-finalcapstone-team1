@@ -1,5 +1,12 @@
 <template>
-  <div id="login">
+  <div class="login-header">
+    <h1>Login</h1>
+  </div>
+
+  <div id="login" class="login">
+    <div class="beer-clipart">
+      <img src="@/assets/beer-glasses1.jpg" class="clip-art">
+    </div>
     <form v-on:submit.prevent="login">
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
@@ -66,5 +73,36 @@ export default {
 }
 label {
   margin-right: 0.5rem;
+}
+.login{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding-top: 10%;
+  font-size: x-large;
+  margin-bottom: 100px;
+  margin-right: 10%;
+  ;
+}
+.login-header {
+  display: flex;
+  height: 200px;
+  background-color: black;
+  margin-bottom: 1rem;
+  color: whitesmoke;
+  justify-content: center;
+  text-align: center;
+  
+}
+.beer-clipart {
+  display: flex;
+  max-width: 75%;
+  max-height: 20%;
+  padding-right: 5%;
+  margin-right: 10%;
+}
+.login-header > h1 {
+  margin-top: 50px;
+  font-size: 75px;
 }
 </style>
