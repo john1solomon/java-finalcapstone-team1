@@ -3,14 +3,12 @@ package com.techelevator.controller;
 import com.techelevator.dao.BreweryDao;
 import com.techelevator.model.Beer;
 import com.techelevator.model.Brewery;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class BreweryController {
     private BreweryDao breweryDao;
 
