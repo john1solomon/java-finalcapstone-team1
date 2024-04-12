@@ -29,7 +29,7 @@
     },
     methods: {
       fetchBeers() {
-        BreweryService.getBeer()
+        BreweryService.getBeers()
           .then(response => {
             this.beers = response.data;
             this.isLoading = false;
@@ -47,5 +47,42 @@
   </script>
   
   <style scoped>
-  /* Style this too, man */
+    .beer-list {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.5rem;
+}
+
+.loading-message {
+  margin-top: 20px;
+}
+
+.no-results-message {
+  margin-top: 20px;
+}
+
+.beer-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.beer-card {
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.beer-name {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
   </style>
