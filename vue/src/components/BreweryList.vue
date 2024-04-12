@@ -1,111 +1,93 @@
-<!-- This is where the API will go, array just filled in for Demo -->
 <template>
-    <div class="brewery-list ">
-      <h2 class="section-title">On Tap</h2>
-      <div class="brewery-cards">
-        <div v-for="brewery in breweries" :key="brewery.id" class="brewery-card">
-          <img :src="brewery.imageUrl" :alt="brewery.name" class="brewery-image">
-          <div class="brewery-info">
-            <h3 class="brewery-name">{{ brewery.name }}</h3>
-            <p class="brewery-location">{{ brewery.location }}</p>
-            <router-link :to="'/breweries/' + brewery.id" class="see-details-link">See Details</router-link>
-          </div>
-        </div>
+  <div class="brewery-list">
+    <h2 class="section-title">Breweries</h2>
+    <div v-if="isLoading" class="loading-message">Loading...</div>
+    <div v-else-if="breweries.length === 0" class="no-results-message">No breweries found.</div>
+    <div v-else class="brewery-cards">
+      <div v-for="brewery in breweries" :key="brewery.breweryId" class="brewery-card">
+        <!-- Any of these could be removed, just testing out -->
+        <h3 class="brewery-name">{{ brewery.breweryName }}</h3>
+        <p class="brewer-name">Brewer: {{ brewery.brewerName }}</p>
+        <p class="contact-info">Phone: {{ brewery.contactInformation }}</p>
+        <p class="location">Address: {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+        <router-link :to="'/breweries/' + brewery.breweryId" class="see-taps-link">See What's On Tap</router-link>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import nb from '@/assets/nb.jpg'
-  import mh from '@/assets/masthead.jpg'
-  import tr from '@/assets/terr.jpg'
-  
-  export default {
-    data() {
-      return {
-        breweries: [
-          { id: 1, name: 'Noble Beast Brewing', location: '1470 Lakeside Ave E, Cleveland OH 44114', imageUrl: nb },
-          { id: 2, name: 'Masthead Brewing Co.', location: '1261 Superior Ave, Cleveland, OH 44114', imageUrl: mh },
-          { id: 3, name: 'Terrestial Brewing Company', location: '7524 Father Frascati, Cleveland, OH 44102', imageUrl: tr },
-          
-        ]
-      };
+  </div>
+</template>
+
+<script>
+import BreweryService from '@/services/BreweryService.js';
+
+export default {
+  data() {
+    return {
+      breweries: [],
+      isLoading: true
+    };
+  },
+  methods: {
+    fetchBreweries() {
+      BreweryService.listBreweries()
+        .then(response => {
+          this.breweries = response.data;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error('Error fetching breweries:', error);
+          this.isLoading = false;
+        });
     }
-  };
-  </script>
-  
-  <style scoped>
-  .brewery-list {
-    margin-top: 50px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-transform: uppercase;
-  
-   
+  },
+  created() {
+    this.fetchBreweries();
   }
+};
+</script>
 
-  .div {
-    border:none;
-  }
-  
- 
-  .section-title {
-    text-align: center;
-    font-size: 2rem;
-  }
-  
-  .brewery-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 30px;
-  }
-  
-  .brewery-card {
-    width: calc(33.33% - 20px);
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    
-  }
-  
-  .brewery-image {
-    width: 100%;
-    height: 200px;
-    object-fit:scale-down;
-  }
-  
-  .brewery-info {
-    padding: 15px;
-    text-align: center;
-    
-  }
-  
-  .brewery-name {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    text-align: center;
-    
-  }
-  
-  .brewery-location {
-    font-size: 1rem;
-    color: #888;
-    text-align: center;
-  }
-  
-  .see-details-link {
-    display: block;
-    margin-top: 15px;
-    text-align: center;
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-  }
+<style scoped>
+.brewery-list {
+  margin-top: 20px;
+  text-align: center;
+}
 
-  .see-details-link:hover {
-    color:#ffcc00;
+.section-title {
+  font-size: 1.5rem;
+}
 
-  }
-  </style>
+.loading-message {
+  margin-top: 20px;
+}
 
+.no-results-message {
+  margin-top: 20px;
+}
+
+.brewery-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.brewery-card {
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brewery-name {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.brewer-name,
+.contact-info,
+.location {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+</style>
