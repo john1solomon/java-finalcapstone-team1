@@ -5,7 +5,7 @@
     <div v-else-if="breweries.length === 0" class="no-results-message">No breweries found.</div>
     <div v-else class="brewery-cards">
       <div v-for="brewery in breweries" :key="brewery.breweryId" class="brewery-card">
-        <img v-if="brewery.breweryId" v-bind:src="'../assets/' + brewery.logoFilename"/>
+        <img v="brewery.breweryId" v-bind:src="getLogo(brewery.logoFilename)"/>
         <!-- Any of these could be removed, just testing out -->
         <h3 class="brewery-name">{{ brewery.breweryName }}</h3>
         <p class="brewer-name">Brewer: {{ brewery.brewerName }}</p>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import BreweryService from '@/services/BreweryService.js';
+import BreweryService from '../services/BreweryService.js';
 
 export default {
   data() {
@@ -38,6 +38,10 @@ export default {
           console.error('Error fetching breweries:', error);
           this.isLoading = false;
         });
+    },
+
+    getLogo(filename) {
+      return new URL(`../assets/${filename}`, import.meta.url).href;
     }
   },
   created() {
