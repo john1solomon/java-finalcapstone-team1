@@ -64,18 +64,12 @@ const routes = [
   component: BreweryListView,
   meta: {
     requiresAuth: false
+  }
   },
-  children: [
-    {
-  path:':breweryId',
+  {path:'/breweries/:breweryId',
   name:"BreweryDetails",
-  component: BreweryDetailView.vue,
-  meta: {
-    requiresAuth: false
-  },
-}
- ]
-},
+  component: BreweryDetailView,
+  }
 ];
 
 // Create the router
