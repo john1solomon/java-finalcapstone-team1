@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Beer;
 import com.techelevator.model.Brewery;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -50,6 +51,50 @@ public class JdbcBreweryDao implements BreweryDao {
         return brewery;
     }
     @Override
+    public Brewery createBrewery(Brewery brewery) {
+        Brewery newBrewery = null;
+        String sql = "INSERT INTO brewery (brewery_name, brewer_name, contact_information, street_address, city, " +
+                "state_code, postal_code, logo_filename, brewery_url, menu_url, ocba_info_url, map_url) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
+        try {
+            int newBreweryId = jdbcTemplate.queryForObject(sql, int.class, brewery.getBreweryName(), brewery.getBrewerName(),
+                    brewery.getContactInformation(),brewery.getStreetAddress(), brewery.getCity(), brewery.getStateCode(),brewery.getPostalCode(),
+                    brewery.getLogoFilename(),brewery.getBreweryURL(), brewery.getMenuURL(), brewery.getOcbaInfoURL(), brewery.getMapURL());
+            newBrewery = getBreweryById(newBreweryId);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return newBrewery;
+    }
+    @Override
+    public Brewery updateBrewery(Brewery brewery) {
+        Brewery updatedBrewery;
+
+        String sql = "UPDATE brewery " +
+                "SET brewery_name = ?, brewer_name = ?, contact_information = ?, street_address = ?, city = ?, state_code = ?, " +
+                "postal_code = ?, logo_filename = ?, brewery_url = ?, menu_url = ?, ocba_info_url = ?, map_url = ? " +
+                "WHERE brewery_id = ?";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, brewery.getBreweryName(), brewery.getBrewerName(), brewery.getContactInformation(),
+                brewery.getStreetAddress(), brewery.getCity(), brewery.getStateCode(), brewery.getPostalCode(), brewery.getLogoFilename(),
+                    brewery.getBreweryURL(), brewery.getMenuURL(), brewery.getOcbaInfoURL(), brewery.getMapURL(), brewery.getBreweryId());
+
+            if (rowsAffected == 0) {
+                updatedBrewery = null;
+//                throw new DaoException("Zero rows affected, expected at least one");
+            } else {
+                updatedBrewery = getBreweryById(brewery.getBreweryId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedBrewery;
+    }
+    @Override
     public List<Beer> getBeers() {
         List<Beer> beers = new ArrayList<>();
         String sql = "SELECT * FROM brewery_beer;";
@@ -64,7 +109,6 @@ public class JdbcBreweryDao implements BreweryDao {
         }
         return beers;
     }
-
     @Override
     public List<Beer> getBeersForBrewery(int breweryId) {
         List<Beer> beers = new ArrayList<>();
@@ -80,7 +124,6 @@ public class JdbcBreweryDao implements BreweryDao {
         }
         return beers;
     }
-
     @Override
     public Beer getBeerById(int beerId) {
         Beer beer = null;
@@ -94,6 +137,65 @@ public class JdbcBreweryDao implements BreweryDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return beer;
+    }
+    @Override
+    public Beer createBeer(Beer beer) {
+        Beer newBeer = null;
+        String sql = "INSERT INTO brewery_beer (brewery_id, beer_name, beer_description, beer_type, abv, num_ratings, avg_rating, last_active) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_beer_id;";
+        try {
+            int newBeerId = jdbcTemplate.queryForObject(sql, int.class, beer.getBreweryId(), beer.getBeerName(), beer.getBeerDescription(),
+                    beer.getBeerType(), beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getLastActive());
+            newBeer = getBeerById(newBeerId);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return newBeer;
+    }
+    @Override
+    public Beer updateBeer(Beer beer) {
+        Beer updatedBeer;
+
+        String sql = "UPDATE brewery_beer " +
+                "SET brewery_id = ?, beer_name = ?, beer_description = ?, beer_type = ?, abv = ?, num_ratings = ?, avg_rating = ?, last_active = ? " +
+                "WHERE brewery_beer_id = ?";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, beer.getBreweryId(), beer.getBeerName(), beer.getBeerDescription(), beer.getBeerType(),
+                    beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getLastActive(), beer.getBeerId());
+
+            if (rowsAffected == 0) {
+                updatedBeer = null;
+//                throw new DaoException("Zero rows affected, expected at least one");
+            } else {
+                updatedBeer = getBeerById(beer.getBeerId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedBeer;
+    }
+    @Override
+    public int deleteBeerById(int beerId) {
+        int numRowsDeleted;
+
+        String sql = "DELETE FROM brewery_beer WHERE brewery_beer_id = ?;";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, beerId);
+
+            if (rowsAffected == 0) {
+                numRowsDeleted = 0;
+                throw new DaoException("Zero brewery beer rows affected, expected at least one");
+            } else {
+                numRowsDeleted = rowsAffected;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return numRowsDeleted;
     }
 
     private Brewery mapRowToBrewery(SqlRowSet rs) {
@@ -127,5 +229,4 @@ public class JdbcBreweryDao implements BreweryDao {
         beer.setLastActive(rs.getDate("last_active").toLocalDate());
         return beer;
     }
-
 }

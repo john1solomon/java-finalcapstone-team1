@@ -7,7 +7,12 @@ import java.util.List;
 public interface BreweryDao {
     List<Brewery> getBreweries();
     Brewery getBreweryById(int breweryId);
+    Brewery createBrewery(Brewery brewery);
+    Brewery updateBrewery(Brewery brewery);
     List<Beer> getBeers();
     List<Beer> getBeersForBrewery(int breweryId);
     Beer getBeerById(int beerId);
+    Beer createBeer(Beer beer);
+    Beer updateBeer(Beer beer);
+    int deleteBeerById(int beerId);
 }
