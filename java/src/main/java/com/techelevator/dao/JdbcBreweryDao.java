@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Beer;
 import com.techelevator.model.Brewery;
+import com.techelevator.model.BreweryEvent;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -197,6 +198,109 @@ public class JdbcBreweryDao implements BreweryDao {
         }
         return numRowsDeleted;
     }
+    @Override
+    public List<BreweryEvent> getBreweryEvents() {
+        List<BreweryEvent> breweryEvents = new ArrayList<>();
+        String sql = "SELECT * FROM brewery_event;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                BreweryEvent breweryEvent = mapRowToBreweryEvent(results);
+                breweryEvents.add(breweryEvent);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return breweryEvents;
+    }
+    @Override
+    public List<BreweryEvent> getBreweryEventsForBrewery(int breweryId) {
+        List<BreweryEvent> breweryEvents = new ArrayList<>();
+        String sql = "SELECT * FROM brewery_event WHERE brewery_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, breweryId);
+            while (results.next()) {
+                BreweryEvent breweryEvent = mapRowToBreweryEvent(results);
+                breweryEvents.add(breweryEvent);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return breweryEvents;
+    }
+    @Override
+    public BreweryEvent getBreweryEventById(int breweryEventId) {
+        BreweryEvent breweryEvent = null;
+        String sql = "SELECT * FROM brewery_event WHERE brewery_event_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, breweryEventId);
+            while (results.next()) {
+                breweryEvent = mapRowToBreweryEvent(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return breweryEvent;
+    }
+    @Override
+    public BreweryEvent createBreweryEvent(BreweryEvent breweryEvent) {
+        BreweryEvent newBreweryEvent = null;
+        String sql = "INSERT INTO brewery_event (brewery_id, event_date, event_name, event_description) " +
+                "VALUES(?, ?, ?, ?) RETURNING brewery_event_id;";
+        try {
+            int newBreweryEventId = jdbcTemplate.queryForObject(sql, int.class, breweryEvent.getBreweryId(), breweryEvent.getEventDate(),
+                    breweryEvent.getEventName(), breweryEvent.getEventDescription());
+            newBreweryEvent = getBreweryEventById(newBreweryEventId);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return newBreweryEvent;
+    }
+    @Override
+    public BreweryEvent updateBreweryEvent(BreweryEvent breweryEvent) {
+        BreweryEvent updatedBreweryEvent;
+
+        String sql = "UPDATE brewery_event " +
+                "SET brewery_id = ?, event_date = ?, event_name = ?, event_description = ? " +
+                "WHERE brewery_event_id = ?";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, breweryEvent.getBreweryId(), breweryEvent.getEventDate(),
+                    breweryEvent.getEventName(), breweryEvent.getEventDescription(), breweryEvent.getBreweryEventId());
+
+            if (rowsAffected == 0) {
+                updatedBreweryEvent = null;
+//                throw new DaoException("Zero rows affected, expected at least one");
+            } else {
+                updatedBreweryEvent = getBreweryEventById(breweryEvent.getBreweryEventId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedBreweryEvent;
+    }
+    @Override
+    public int deleteBreweryEventById(int breweryEventId) {
+        int numRowsDeleted;
+
+        String sql = "DELETE FROM brewery_event WHERE brewery_event_id = ?;";
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, breweryEventId);
+
+            if (rowsAffected == 0) {
+                numRowsDeleted = 0;
+                throw new DaoException("Zero brewery event rows affected, expected at least one");
+            } else {
+                numRowsDeleted = rowsAffected;
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return numRowsDeleted;
+    }
 
     private Brewery mapRowToBrewery(SqlRowSet rs) {
         Brewery brewery = new Brewery();
@@ -215,7 +319,6 @@ public class JdbcBreweryDao implements BreweryDao {
         brewery.setMapURL(rs.getString("map_url"));
         return brewery;
     }
-
     private Beer mapRowToBeer(SqlRowSet rs) {
         Beer beer = new Beer();
         beer.setBeerId(rs.getInt("brewery_beer_id"));
@@ -228,5 +331,14 @@ public class JdbcBreweryDao implements BreweryDao {
         beer.setAverageRating(rs.getBigDecimal("avg_rating"));
         beer.setLastActive(rs.getDate("last_active").toLocalDate());
         return beer;
+    }
+    private BreweryEvent mapRowToBreweryEvent(SqlRowSet rs) {
+        BreweryEvent breweryEvent = new BreweryEvent();
+        breweryEvent.setBreweryEventId(rs.getInt("brewery_event_id"));
+        breweryEvent.setBreweryId(rs.getInt("brewery_id"));
+        breweryEvent.setEventDate(rs.getDate("event_date").toLocalDate());
+        breweryEvent.setEventName(rs.getString("event_name"));
+        breweryEvent.setEventDescription(rs.getString("event_description"));
+        return breweryEvent;
     }
 }

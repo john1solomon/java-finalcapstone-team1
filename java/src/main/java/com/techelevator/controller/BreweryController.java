@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.BreweryDao;
 import com.techelevator.model.Beer;
 import com.techelevator.model.Brewery;
+import com.techelevator.model.BreweryEvent;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,7 +38,6 @@ public class BreweryController {
     public List<Beer> getBeers() {
         return breweryDao.getBeers();
     }
-
     @RequestMapping(path = "/brewery/{breweryId}/beer", method = RequestMethod.GET)
     public List<Beer> getBeersForBrewery(@PathVariable int breweryId) {
         return breweryDao.getBeersForBrewery(breweryId);
@@ -57,5 +57,29 @@ public class BreweryController {
     @RequestMapping(path = "/beer/{beerId}", method = RequestMethod.DELETE)
     public int deleteBeerById(@PathVariable int beerId) {
         return breweryDao.deleteBeerById(beerId);
+    }
+    @RequestMapping(path = "/event", method = RequestMethod.GET)
+    public List<BreweryEvent> getBreweryEvents() {
+        return breweryDao.getBreweryEvents();
+    }
+    @RequestMapping(path = "/brewery/{breweryId}/event", method = RequestMethod.GET)
+    public List<BreweryEvent> getBreweryEventsForBrewery(@PathVariable int breweryId) {
+        return breweryDao.getBreweryEventsForBrewery(breweryId);
+    }
+    @RequestMapping(path = "/event/{breweryEventId}", method = RequestMethod.GET)
+    public BreweryEvent getBreweryEventById(@PathVariable int breweryEventId) {
+        return breweryDao.getBreweryEventById(breweryEventId);
+    }
+    @RequestMapping(path = "/event", method = RequestMethod.POST)
+    public BreweryEvent createBreweryEvent(@Valid @RequestBody BreweryEvent breweryEvent) {
+        return breweryDao.createBreweryEvent(breweryEvent);
+    }
+    @RequestMapping(path = "/event/{breweryEventId}", method = RequestMethod.PUT)
+    public BreweryEvent updateBreweryEvent(@Valid @RequestBody BreweryEvent breweryEvent, @PathVariable int breweryEventId) {
+        return breweryDao.updateBreweryEvent(breweryEvent);
+    }
+    @RequestMapping(path = "/event/{breweryEventId}", method = RequestMethod.DELETE)
+    public int deleteBreweryEventById(@PathVariable int breweryEventId) {
+        return breweryDao.deleteBreweryEventById(breweryEventId);
     }
 }
