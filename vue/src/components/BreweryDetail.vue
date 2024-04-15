@@ -3,11 +3,20 @@
     <!-- Brewery details card -->
     <div class="card brewery-card">
       <img v="brewery.breweryId" v-bind:src="getLogo(brewery.logoFilename)" class="card-image"/>
-      <h2 class="brewery-name">{{ brewery.breweryName }}</h2>
+      <h2 class="brewery-name"> <a :href="brewery.breweryURL" target="_blank" rel="noopener noreferrer">
+     {{ brewery.breweryName }}</a></h2>
+      <a :href="brewery.ocbaInfoURL" target="_blank" rel="noopener noreferrer">
+      Hours and Info
+    </a>
       <p class="brewery-location">
-        Address:{{ brewery.streetAddress }} {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+        Address: {{ brewery.streetAddress }} {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+      <a :href="brewery.mapURL" target="_blank" rel="noopener noreferrer">
+      Directions
+      </a>
       <p class="contact-info">Contact: {{ brewery.contactInformation }}</p>
-      <p class="menu-info">Menu: {{ brewery.menuUrl }}</p>
+      <a :href="brewery.menuURL" target="_blank" rel="noopener noreferrer">
+      Menu
+    </a>
     </div>
 
     <!-- Beers on tap card -->
