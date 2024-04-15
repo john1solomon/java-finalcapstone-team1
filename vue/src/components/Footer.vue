@@ -1,9 +1,9 @@
 <template>
 <footer class="footer">
     <div class="container">
-        <div class="footer-links">
+        <!-- <div class="footer-links">
             <router-link to="/contact" class="footer-link">Contact</router-link>
-        </div>
+        </div> -->
         <p class="copyright">&copy; 2024 NorthCoast BeerFinder. All Rights Reserved.</p>
     </div>
 </footer>

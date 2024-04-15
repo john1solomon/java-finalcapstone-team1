@@ -16,6 +16,8 @@ export function createStore(currentToken, currentUser) {
       SET_USER(state, user) {
         state.user = user;
         localStorage.setItem('user', JSON.stringify(user));
+        // adding logger to log the user object
+        console.log('User object', user);
       },
       LOGOUT(state) {
         localStorage.removeItem('token');
@@ -25,6 +27,18 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       }
     },
+    // Adding this to try to tackle handling roles and permissions I will comment out below to know what garbage to remove if it doesn't work
+    getters: {
+      // Getter to retrieve the user's role (authorities)
+      getUserRole: state => {
+        return state.user ? state.user.authorities : null;
+      },
+      // Getter to check if the user has the ROLE_BREWER role
+      isUserBrewer: state => {
+      return state.user && state.user.authorities && state.user.authorities.includes('ROLE_BREWER');
+      }
+    }
+    // End of code I added to 'store'
   });
   return store;
 }
