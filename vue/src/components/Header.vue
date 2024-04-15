@@ -11,7 +11,8 @@
             <li class="nav-item"><router-link to="/beers" class="nav-link">Beers</router-link></li>
             <!-- <li class="nav-item"><router-link to="/contact" class="nav-link">Contact</router-link></li> -->
             <!-- Conditional rendering for the "Brewer" tab -->
-            <li v-if="isBrewer" class="nav-item"><router-link to="/mybrewery" class="nav-link">My Brewery</router-link></li>
+            <li v-if="isBrewer || isAdmin" class="nav-item"><router-link to="/mybrewery" class="nav-link">My Brewery</router-link></li>
+            <li v-if="isAdmin" class="nav-item"><router-link to="/addbrewery" class="nav-link">Add Brewery</router-link></li>
           <!-- End of conditional rendering -->
             <li  class="nav-item"><router-link to="/logout" class="nav-link">Logout</router-link></li>
         </ul>
@@ -27,6 +28,9 @@ export default {
     computed: {
         isBrewer() {
             return this.$store.getters.isUserBrewer;
+        },
+        isAdmin() {
+            return this.$store.getters.isUserAdmin;
         }
     }
 };
