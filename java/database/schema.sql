@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, brewer, brewery, brewery_beer;
+DROP TABLE IF EXISTS users, brewer, brewery, brewery_beer, brewery_event, beer_review;
 --DROP TABLE IF EXISTS brewery_beer;
 --DROP TABLE IF EXISTS brewery, brewery_beer;
 --DROP TABLE IF EXISTS users;
@@ -51,5 +51,27 @@ CREATE TABLE brewery_beer (
 	CONSTRAINT PK_brewery_beer PRIMARY KEY (brewery_beer_id),
 	CONSTRAINT FK_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id)
 );
+
+CREATE TABLE brewery_event (
+	brewery_event_id SERIAL,
+	brewery_id int NOT NULL,
+	event_date date NOT NULL,
+	event_name varchar(100) NOT NULL,
+	event_description varchar(500),
+	CONSTRAINT PK_brewery_event PRIMARY KEY (brewery_event_id),
+	CONSTRAINT FK_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id)
+);
+
+CREATE TABLE beer_review (
+	user_id int NOT NULL,
+	brewery_beer_id int NOT NULL,
+	beer_rating int,
+	review varchar(200),
+	favorite boolean NOT NULL DEFAULT FALSE,
+	CONSTRAINT PK_beer_review PRIMARY KEY (user_id, brewery_beer_id),
+	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
+	CONSTRAINT FK_brewery_beer_id FOREIGN KEY (brewery_beer_id) REFERENCES brewery_beer (brewery_beer_id)
+);
+
 
 COMMIT TRANSACTION;
