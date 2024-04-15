@@ -1,12 +1,4 @@
 
-import Vue from 'vue';
-import VueCarousel from 'vue-carousel';
-
-Vue.use(VueCarousel);
-
-/*added Vue and Vue Carousel after running npm install vue-carousel*/
-I added the hidden-link class to router and used css to hide the nav-bar for now
-
 <template>
   <div id="capstone-app">
     <div id="nav">

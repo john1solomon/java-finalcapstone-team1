@@ -1,23 +1,33 @@
 <template>
-    <div class="brewery-details">
-      <!-- Display brewery details -->
+  <div class="brewery-details">
+    <!-- Brewery details card -->
+    <div class="card brewery-card">
+      <img v="brewery.breweryId" v-bind:src="getLogo(brewery.logoFilename)" class="card-image"/>
       <h2 class="brewery-name">{{ brewery.breweryName }}</h2>
-      <p class="brewery-location">Location: {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+      <p class="brewery-location">
+        Address:{{ brewery.streetAddress }} {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
       <p class="contact-info">Contact: {{ brewery.contactInformation }}</p>
-  
-      <!-- Display beers on tap -->
+      <p class="menu-info">Menu: {{ brewery.menuUrl }}</p>
+    </div>
+
+    <!-- Beers on tap card -->
+    <div v-if="beers.length > 0" class="card beers-card">
       <h3 class="beers-header">Beers on Tap</h3>
-      <div class="beer-container" v-for="beer in beers" :key="beer.beerId">
-        <h4 class="beer-name">{{ beer.beerName }}</h4>
-        <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p>
-        <p class="beer-type">Type: {{ beer.beerType }}</p>
-        <p class="abv">ABV: {{ beer.abv }}</p>
-        <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
-        <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
-        <p class="last-active">Last Active: {{ beer.lastActive }}</p>
+      <div class="beer-container">
+        <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
+          <h4 class="beer-name">{{ beer.beerName }}</h4>
+          <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
+          <p class="beer-type">Type: {{ beer.beerType }}</p>
+          <p class="abv">ABV: {{ beer.abv }}</p>
+          <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
+          <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
+          <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        </div>
       </div>
     </div>
-  </template>
+    <div v-else class="no-beers-message">See Website for Current Selection</div>
+  </div>
+</template>
   
   <script>
   import BreweryService from '@/services/BreweryService.js';
@@ -50,7 +60,10 @@
           .catch(error => {
             console.error('Error fetching beers on tap:', error);
           });
-      }
+      },
+      getLogo(filename) {
+      return new URL(`../assets/${filename}`, import.meta.url).href;
+    },
     },
     created() {
       this.fetchBreweryDetails();
@@ -59,5 +72,72 @@
   </script>
   
   <style scoped>
-  /*style this, man*/
+.brewery-details {
+  display:grid;
+  
+  gap:20px;
+  justify-items:center;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+  
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.brewery-card {
+  background-color: #333;
+  color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.beers-card {
+  background-color: #fff;
+}
+
+.beer-card {
+  background-color:#333;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* Styles for the no beers message */
+.no-beers-message {
+  margin-top: 20px;
+  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:large;
+    text-shadow: 0 0 10px #ffcc00 ;
+    animation:glow 1s ease infinite alternate;
+    text-transform: uppercase;
+
+}
+@keyframes glow {
+  from {
+    text-shadow:0 0 10px#ffcc00 ;
+  }
+  to {
+    text-shadow:0 0 30px #ffcc00 ;
+  }
+}
+
+.card-image {
+  height:200px;
+}
+
   </style>

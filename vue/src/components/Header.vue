@@ -10,7 +10,10 @@
             <li class="nav-item"><router-link to="/breweries" class="nav-link">Breweries</router-link></li>
             <li class="nav-item"><router-link to="/beers" class="nav-link">Beers</router-link></li>
             <!-- <li class="nav-item"><router-link to="/contact" class="nav-link">Contact</router-link></li> -->
-            <li class="nav-item"><router-link to="/logout" class="nav-link">Logout</router-link></li>
+            <!-- Conditional rendering for the "Brewer" tab -->
+            <li v-if="isBrewer" class="nav-item"><router-link to="/mybrewery" class="nav-link">My Brewery</router-link></li>
+          <!-- End of conditional rendering -->
+            <li  class="nav-item"><router-link to="/logout" class="nav-link">Logout</router-link></li>
         </ul>
     </nav>
     </div>
@@ -18,8 +21,14 @@
 </template>
 
 <script>
+
 export default {
-    name:'Header'
+    name:'Header',
+    computed: {
+        isBrewer() {
+            return this.$store.getters.isUserBrewer;
+        }
+    }
 };
 </script>
 
