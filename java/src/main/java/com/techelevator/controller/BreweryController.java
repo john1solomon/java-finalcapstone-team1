@@ -27,7 +27,7 @@ public class BreweryController {
         return breweryDao.getBreweryById(breweryId);
     }
     @RequestMapping(path = "/brewery", method = RequestMethod.POST)
-    public Brewery createBeer(@Valid @RequestBody Brewery brewery) {
+    public Brewery createBrewery(@Valid @RequestBody Brewery brewery) {
         return breweryDao.createBrewery(brewery);
     }
     @RequestMapping(path = "/brewery/{breweryId}", method = RequestMethod.PUT)
