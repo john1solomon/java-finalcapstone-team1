@@ -18,6 +18,7 @@
         <p class="abv">ABV: {{ beer.abv }}</p>
         <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
         <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
+        <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
       </div>
     </div>
   </div>
@@ -123,13 +124,6 @@ export default {
   margin-bottom: 5px;
 }
 
-.search-input {
-  margin-bottom: 10px;
-  padding: 5px;
-  border: 2px solid black;
-  border-radius: 5px;
-  width: 100%;
-}
-
 
 </style>
+

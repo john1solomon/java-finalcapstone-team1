@@ -1,4 +1,10 @@
 <template>
+  <BButton @click="modal = !modal"> Add Review </BButton>
+  <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+
+ 
+  
   <div class="brewery-details">
     <!-- Brewery details card -->
     <div class="card brewery-card">
@@ -14,9 +20,13 @@
       Directions
       </a>
       <p class="contact-info">Contact: {{ brewery.contactInformation }}</p>
+
       <a :href="brewery.menuURL" target="_blank" rel="noopener noreferrer" class="links">
-      Menu
-    </a>
+        Menu
+      </a>
+      <div>
+        <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
+      </div>
     </div>
 
     <!-- Beers on tap card -->
@@ -36,18 +46,31 @@
     <div v-else class="no-beers-message">See Website for Current Selection</div>
   </div>
 </template>
+
   
   <script>
-  import BreweryService from '../services/BreweryService.js';
+  import BreweryService from '@/services/BreweryService.js';
   
   export default {
     data() {
       return {
+        status: false,
         brewery: {},
-        beers: []
+        beers: [],
+        modal: false,
+        ex1Options: [
+          {value: null, text: 'Please select an option'},
+          {value: 'a', text: 'This is First option'},
+          {value: 'b', text: 'Selected Option'},
+          {value: {C: '3PO'}, text: 'This is an option with object value'},
+          {value: 'd', text: 'This one is disabled', disabled: true},
+        ]
       };
     },
     methods: {
+      toggleStatus() {
+        this.status = !this.status;
+      },
       fetchBreweryDetails() {
         const breweryId = this.$route.params.breweryId;
   
@@ -80,6 +103,10 @@
   </script>
   
   <style scoped>
+i {
+  color: red;
+}
+
 .brewery-details {
   display:grid;
   
@@ -168,6 +195,9 @@
 
 .card-image {
   height:200px;
+}
+#checkbox-1 {
+  justify-content: left;
 }
 
 .links {
