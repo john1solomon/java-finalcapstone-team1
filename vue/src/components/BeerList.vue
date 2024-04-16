@@ -4,6 +4,7 @@
     
     <!-- Search input fields -->
     <div class="search-container">
+      <input type="text" v-model="nameQuery" placeholder="Search by Name" class="search-input" />
       <input type="text" v-model="searchQuery" placeholder="Search by Type" class="search-input" />
       <input type="text" v-model="ratingQuery" placeholder="Search by Rating" class="search-input" />
       <input type="text" v-model="abvQuery" placeholder="Search by ABV" class="search-input" />
@@ -36,6 +37,7 @@ export default {
       status: false,
       beers: [],
       isLoading: true,
+      nameQuery:'',
       searchQuery: '',
       ratingQuery: '',
       abvQuery: ''
@@ -47,6 +49,7 @@ export default {
         // Filter based on beerType, averageRating, and abv fields
         return (
           beer.beerType.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+          beer.beerName.toLowerCase().includes(this.nameQuery.toLowerCase()) &&
           (this.ratingQuery === '' || beer.averageRating.toString().includes(this.ratingQuery)) &&
           (this.abvQuery === '' || beer.abv.toString().includes(this.abvQuery))
         );
