@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Header/>
-        <BreweryDetail/>
+        <ModifyBreweryDetail/>
         <Footer/>
         
     </div>
@@ -9,7 +9,7 @@
 
 <script>
 import Header from '../components/Header.vue';
-import BreweryDetail from '../components/BreweryDetail.vue';
+import ModifyBreweryDetail from '../components/ModifyBreweryDetail.vue';
 import Footer from '../components/Footer.vue';
 
 
@@ -17,7 +17,7 @@ import Footer from '../components/Footer.vue';
 export default {
     components: {
         Header,
-        BreweryDetail,
+        ModifyBreweryDetail,
         Footer
     }
 };
