@@ -4,6 +4,7 @@
     <div v-if="isLoading" class="loading-message">Loading...</div>
     <div v-else-if="breweries.length === 0" class="no-results-message">No breweries found.</div>
     <div v-else class="brewery-cards">
+      
       <router-link v-for="brewery in breweries" :key="brewery.breweryId" :to="'/breweries/' + brewery.breweryId" class="brewery-card">
         <img v="brewery.breweryId" v-bind:src="getLogo(brewery.logoFilename)" class="card-image"/>
         <!-- Any of these could be removed, just testing out -->
@@ -11,9 +12,9 @@
         <!-- <p class="brewer-name">Brewer: {{ brewery.brewerName }}</p>
         <p class="contact-info">Phone: {{ brewery.contactInformation }}</p>
         <p class="location">Address: {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p> -->
-       </router-link>
-     
+      </router-link>
     </div>
+    
   </div>
 </template>
 

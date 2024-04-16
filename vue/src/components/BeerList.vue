@@ -12,6 +12,11 @@
         <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
         <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
         <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        <div >
+         <input v-model="beer.favorite" type="checkbox" v-bind:id="`cbx-${beer.beerId}`" />
+         <label v-bind:for="`cbx-${beer.beerId}`" class="toggle"><span></span></label>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -92,6 +97,5 @@ export default {
   font-size: 16px;
   margin-bottom: 5px;
 }
-
-
 </style>
+

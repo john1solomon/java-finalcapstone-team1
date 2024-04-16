@@ -3,6 +3,9 @@ import CapstoneApp from './App.vue'
 import { createStore } from './store'
 import router from './router'
 import axios from 'axios'
+import {createBootstrap} from 'bootstrap-vue-next'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 
 /* sets the base url for server API communication with axios */
@@ -28,4 +31,5 @@ const store = createStore(currentToken, currentUser);
 const app = createApp(CapstoneApp);
 app.use(store);
 app.use(router);
+app.use(createBootstrap());
 app.mount('#app');
