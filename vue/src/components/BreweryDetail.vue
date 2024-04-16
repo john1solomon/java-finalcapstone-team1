@@ -133,14 +133,21 @@ i {
 }
 
 .brewery-card {
+  width:400px;
   background-color: #333;
   color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
     text-transform: uppercase;
+    display:flex;
+  align-items: center;
+  flex-wrap:wrap;
+  text-transform: uppercase;
+    word-wrap: break-word;
 }
 
 .beers-card {
+ 
   background-color: #fff;
   display: flex;
   flex-wrap:wrap;
@@ -167,7 +174,7 @@ i {
   justify-content: space-between;
   background-color:#333;
   border-bottom: 1px solid #ddd;
-  width:200px;
+  width:300px;
   padding: 15px;
   color: #fff;
     font-family: Arial, Helvetica, sans-serif;
@@ -182,9 +189,9 @@ i {
   color: #333;
   font-family: Arial, Helvetica, sans-serif;
   font-size:large;
-    text-shadow: 0 0 10px #ffcc00 ;
-    animation:glow 1s ease infinite alternate;
-    text-transform: uppercase;
+  text-shadow: 0 0 10px #ffcc00 ;
+  animation:glow 1s ease infinite alternate;
+  text-transform: uppercase;
 
 }
 @keyframes glow {
@@ -197,7 +204,9 @@ i {
 }
 
 .card-image {
+ 
   height:200px;
+  
 }
 #checkbox-1 {
   justify-content: left;
