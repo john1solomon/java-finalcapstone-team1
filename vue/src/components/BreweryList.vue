@@ -58,7 +58,9 @@ export default {
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .loading-message {

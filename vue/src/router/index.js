@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import BreweryListView from '../views/BreweryListView.vue';
 import BreweryDetailView from '../views/BreweryDetailView.vue';
 import BeerListView from '../views/BeerListView.vue';
+import ModifyBreweryDetailView from '../views/ModifyBreweryDetailView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -69,6 +70,16 @@ const routes = [
   {path:'/breweries/:breweryId',
   name:"BreweryDetails",
   component: BreweryDetailView,
+  },
+
+  {
+    path:"/modifybeers",
+    name:"ModifyBreweryDetail",
+    component:ModifyBreweryDetailView,
+    meta: {
+      requiresAuth: true
+   
+    }
   }
 ];
 

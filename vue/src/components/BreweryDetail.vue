@@ -9,21 +9,30 @@
     <!-- Brewery details card -->
     <div class="card brewery-card">
       <img v="brewery.breweryId" v-bind:src="getLogo(brewery.logoFilename)" class="card-image"/>
-      <h2 class="brewery-name">{{ brewery.breweryName }}</h2>
+      <h2 class="brewery-name"> <a :href="brewery.breweryURL" target="_blank" rel="noopener noreferrer" class="links">
+     {{ brewery.breweryName }}</a></h2>
+      <a :href="brewery.ocbaInfoURL" target="_blank" rel="noopener noreferrer"  class="links">
+      Hours and Info
+    </a>
       <p class="brewery-location">
-        Address:{{ brewery.streetAddress }} {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+        Address: {{ brewery.streetAddress }} {{ brewery.city }}, {{ brewery.stateCode }}, {{ brewery.postalCode }}</p>
+      <a :href="brewery.mapURL" target="_blank" rel="noopener noreferrer" class="links">
+      Directions
+      </a>
       <p class="contact-info">Contact: {{ brewery.contactInformation }}</p>
-      <p class="menu-info">Menu: {{ brewery.menuUrl }}</p>
+
+      <a :href="brewery.menuURL" target="_blank" rel="noopener noreferrer" class="links">
+        Menu
+      </a>
       <div>
         <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
-        </div>
+      </div>
     </div>
 
     <!-- Beers on tap card -->
-    <div v-if="beers.length > 0" class="card beers-card">
-      <h3 class="beers-header">Beers on Tap</h3>
-      <div class="beer-container">
-        <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
+    <h3 class="beers-header">Beers on Tap</h3>
+    <div v-if="beers.length > 0" class="beers-card">
+     <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
           <h4 class="beer-name">{{ beer.beerName }}</h4>
           <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
           <p class="beer-type">Type: {{ beer.beerType }}</p>
@@ -32,7 +41,7 @@
           <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
           <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
         </div>
-      </div>
+      
     </div>
     <div v-else class="no-beers-message">See Website for Current Selection</div>
   </div>
@@ -41,8 +50,6 @@
   
   <script>
   import BreweryService from '@/services/BreweryService.js';
-
-  
   
   export default {
     data() {
@@ -132,16 +139,38 @@ i {
 
 .beers-card {
   background-color: #fff;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  padding:20px;
+  gap:20px;
+
 }
 
+.beers-header {
+  font-size: 30px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+ 
+}
+
+
+
+
 .beer-card {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
   background-color:#333;
   border-bottom: 1px solid #ddd;
+  width:200px;
   padding: 15px;
   color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
     text-transform: uppercase;
+    word-wrap: break-word;
 }
 
 /* Styles for the no beers message */
@@ -169,6 +198,19 @@ i {
 }
 #checkbox-1 {
   justify-content: left;
+}
+
+.links {
+  padding: 15px;
+  color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+
+}
+
+.links:hover {
+    color:#ffcc00 !important;
 }
 
   </style>

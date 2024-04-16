@@ -31,12 +31,15 @@ export function createStore(currentToken, currentUser) {
     getters: {
       // Getter to retrieve the user's role (authorities)
       getUserRole: state => {
-        return state.user ? state.user.authorities : null;
+        return state.user ? state.user.authorities[0].name : null;
       },
       // Getter to check if the user has the ROLE_BREWER role
       isUserBrewer: state => {
-      return state.user && state.user.authorities && state.user.authorities.includes('ROLE_BREWER');
-      }
+      return state.user.authorities[0].name === 'ROLE_BREWER';
+      },
+      isUserAdmin: state => {
+        return state.user.authorities[0].name === 'ROLE_ADMIN';
+        }
     }
     // End of code I added to 'store'
   });

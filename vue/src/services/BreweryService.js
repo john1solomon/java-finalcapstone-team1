@@ -23,4 +23,8 @@ export default {
     return http.get(`/beer`)
   },
 
+  addBeer() {
+    return http.post(`/beer`)
+  }
+
 }
