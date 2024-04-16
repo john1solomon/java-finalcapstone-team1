@@ -33,17 +33,17 @@
     <h3 class="beers-header">Beers on Tap</h3>
     <div v-if="beers.length > 0" class="beers-card">
      <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
-          <h4 class="beer-name">{{ beer.beerName }}</h4>
-          <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
-          <p class="beer-type">Type: {{ beer.beerType }}</p>
-          <p class="abv">ABV: {{ beer.abv }}</p>
-          <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
-          <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
-          <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
-          <BButton @click="modal = !modal"> Add Review </BButton>
-          <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
-          <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
-        </div>
+        <h4 class="beer-name">{{ beer.beerName }}</h4>
+        <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
+        <p class="beer-type">Type: {{ beer.beerType }}</p>
+        <p class="abv">ABV: {{ beer.abv }}</p>
+        <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
+        <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
+        <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        <BButton @click="modal = !modal"> Add Review </BButton>
+        <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
+        <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+      </div>
       
     </div>
     <div v-else class="no-beers-message">See Website for Current Selection</div>

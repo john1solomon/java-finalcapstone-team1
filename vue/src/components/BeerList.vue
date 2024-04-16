@@ -57,7 +57,7 @@ export default {
     }
   },
   methods: {
-    toggleStatus() {
+    toggleStatus(id) {
       this.status = !this.status;
     },
     fetchBeers() {
@@ -82,6 +82,9 @@ export default {
 
 <style scoped>
 
+i {
+  color: red;
+}
 .search-input {
   width: 100%;
   border-radius: 8px;
@@ -89,6 +92,7 @@ export default {
   
   display:flex;
   flex-wrap:wrap;
+
 
 }
 .beer-list {
