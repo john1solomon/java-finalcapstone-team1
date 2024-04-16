@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    toggleStatus() {
+    toggleStatus(id) {
       this.status = !this.status;
     },
     fetchBeers() {
@@ -78,6 +78,9 @@ export default {
 
 
 <style scoped>
+i {
+  color: red;
+}
 .beer-list {
   max-width: 1200px;
   margin: 0 auto;
