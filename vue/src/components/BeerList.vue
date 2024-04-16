@@ -92,16 +92,6 @@ i {
 
 
 }
-.search-input {
-  width: 100%;
-  border-radius: 8px;
-  gap:20px;
-  
-  display:flex;
-  flex-wrap:wrap;
-
->>>>>>> b8e37989c53082bd860c6fcde7b46a7db8b0f435
-}
 .beer-list {
   max-width: 1200px;
   margin: 0 auto;
