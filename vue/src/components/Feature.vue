@@ -9,46 +9,94 @@
         </div>
       </section>
   
-      <!-- Featured Breweries section -->
-      <section class="featured-breweries">
-        <div class="container">
-          <h2 class="section-title">Featured Breweries</h2>
-          <div class="breweries-grid">
-            <!-- Example brewery card -->
-            <div class="brewery-card">
-              <img src="../assets/glb.jpg" alt="Brewery 1" class="brewery-image">
-              <h3 class="brewery-name">Great Lakes Brewing</h3>
-              <p class="brewery-description">It may not be the brewery you want, but it's the brewery you deserve.</p>
-              
-            </div>
-            <!-- Add more brewery cards as needed -->
+      
+      <section class="carousel-section">
+      <div class="brewery-carousel">
+        <BCarousel id="breweryCarousel" controls indicators ride="carousel">
+          
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/nbbrewery.png"   width="100%"
+               alt="Test 1"> </template>
+            <h1>NOBLE BEAST BREWING</h1>
+            <h2>1470 LAKESIDE AVE CLE OH 44114</h2>
+            <h3>WING NIGHT EVERY WEDNESDAY</h3>
+            
+            
+          </BCarouselSlide>
+
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/glbrewery.jpg"  width="100%" alt="Test 2">
+            </template>
+            <h1>GREAT LAKES BREWERY</h1>
+            <h2>2516 MARKET AVE CLE OH 44113</h2>
+            <h3>DRAFT DEALS EVERY MONDAY</h3>
+          </BCarouselSlide>
+
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/isb.png"   width="100%" alt="Test 2">
+            </template>
+            <h1>IMMIGRANT SON BREWERY</h1>
+            <h2>18120 SLOANE AVE CLE OH 44107</h2>
+            <h3>TRIVIA EVERY TUESDAY AT 7:00PM</h3>
+          </BCarouselSlide>
+        </BCarousel>
           </div>
-        </div>
+
       </section>
   
-      <!-- Upcoming Events section -->
-      <section class="upcoming-events">
-        <div class="container">
-          <h2 class="section-title">Upcoming Events</h2>
-          <div class="events-list">
-            <!-- Example event item -->
-            <div class="event-item">
-              <h3 class="event-title">Drinking with Devs</h3>
-              <img src="../assets/nbb.png" alt="Brewery 2" class="brewery-image">
-              <p class="event-date">Date: April 19, 2024</p>
-              <p class="event-description">So long & good luck, Tech Elevator Cohort 25</p>
-              
-            </div>
-            <!-- Add more event items as needed -->
+      <!-- Upcoming Events Carousel -->
+      <section class="carousel-section">
+      <div class="events-carousel">
+        <BCarousel id="EventsCarousel" controls indicators ride="carousel">
+          
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/1.jpg"    width="100%"
+               alt="Test 1">
+            </template>
+            <h1>DRINKING WITH DEVS</h1>
+            <h2>FRIDAY APRIL 26, 2024</h2>
+            <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
+            <p>BYOB</p>
+          </BCarouselSlide>
+
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/5.jpg" width="100%" alt="Test 2">
+            </template>
+            <h1>TECH ELEVATOR COHORT 25 GRADUATION</h1>
+            <h2>FRIDAY APRIL 19, 2024</h2>
+            <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
+            <p>smell ya later, nerds</p>
+          </BCarouselSlide>
+        
+        <BCarouselSlide>
+        <template #img>
+              <img src="@/assets/2prawnevent.png"    width="100%"
+               alt="Test 1">
+            </template>
+            <h1>2 PRAWN APPROACH ALL BEER POTLUCK</h1>
+            <h2>SATURDAY 420 2024</h2>
+            <h3>THEY MONEY LONGER THAN JAMES CAMERA</h3>
+          </BCarouselSlide>
+        </BCarousel>
           </div>
-        </div>
       </section>
     </div>
   </template>
   
   <script>
+  import { BCarousel,BCarouselSlide } from 'bootstrap-vue-next';
+  
   export default {
-    name: 'Feature'
+    name: 'Feature',
+    components: {
+      BCarousel,
+      BCarouselSlide,
+    },
   };
   </script>
   
@@ -81,83 +129,12 @@
     margin-bottom: 2rem;
   }
   
-  /* Styles for featured breweries section */
-  .featured-breweries {
-    padding: 4rem 0;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+  /* .events-carousel {
+    height:50px;
+    width:100%;
   }
-  
-  .section-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .breweries-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-  
-  .brewery-card {
-    background-color: #f8f8f8;
-    padding: 2rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-    margin:0 auto;
-  }
-  
-  .brewery-image {
-    width: 100%;
-    border-radius: 5px;
-  }
-  
-  .brewery-name {
-    font-size: 1.5rem;
-    margin-top: 1rem;
-  }
-  
-  .brewery-description {
-    margin-top: 1rem;
-  }
-  
-  /* Styles for upcoming events section */
-  .upcoming-events {
-    padding: 4rem 0;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .events-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-  }
-  
-  .event-item {
-    background-color: #f8f8f8;
-    padding: 2rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  
-  .event-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .event-date {
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-  
-  .event-description {
-    margin-bottom: 1rem;
-  }
+  */
+
+
+
   </style>
