@@ -19,6 +19,9 @@
         <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
         <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
         <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        <div>
+          <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +33,7 @@ import BreweryService from '../services/BreweryService.js';
 export default {
   data() {
     return {
+      status: false,
       beers: [],
       isLoading: true,
       searchQuery: '',
@@ -50,6 +54,9 @@ export default {
     }
   },
   methods: {
+    toggleStatus() {
+      this.status = !this.status;
+    },
     fetchBeers() {
       BreweryService.getBeers()
         .then(response => {

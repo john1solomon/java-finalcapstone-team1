@@ -40,6 +40,9 @@
           <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
           <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
           <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+          <BButton @click="modal = !modal"> Add Review </BButton>
+          <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
+          <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
         </div>
       
     </div>
