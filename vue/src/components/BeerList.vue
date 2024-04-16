@@ -4,6 +4,7 @@
     
     <!-- Search input fields -->
     <div class="search-container">
+      <input type="text" v-model="nameQuery" placeholder="Search by Name" class="search-input" />
       <input type="text" v-model="searchQuery" placeholder="Search by Type" class="search-input" />
       <input type="text" v-model="ratingQuery" placeholder="Search by Rating" class="search-input" />
       <input type="text" v-model="abvQuery" placeholder="Search by ABV" class="search-input" />
@@ -19,6 +20,9 @@
         <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
         <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
         <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        <div>
+          <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
+        </div>
       </div>
     </div>
   </div>
@@ -30,8 +34,10 @@ import BreweryService from '../services/BreweryService.js';
 export default {
   data() {
     return {
+      status: false,
       beers: [],
       isLoading: true,
+      nameQuery:'',
       searchQuery: '',
       ratingQuery: '',
       abvQuery: ''
@@ -43,6 +49,7 @@ export default {
         // Filter based on beerType, averageRating, and abv fields
         return (
           beer.beerType.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+          beer.beerName.toLowerCase().includes(this.nameQuery.toLowerCase()) &&
           (this.ratingQuery === '' || beer.averageRating.toString().includes(this.ratingQuery)) &&
           (this.abvQuery === '' || beer.abv.toString().includes(this.abvQuery))
         );
@@ -50,6 +57,9 @@ export default {
     }
   },
   methods: {
+    toggleStatus(id) {
+      this.status = !this.status;
+    },
     fetchBeers() {
       BreweryService.getBeers()
         .then(response => {
@@ -71,6 +81,20 @@ export default {
 
 
 <style scoped>
+
+i {
+  color: red;
+}
+.search-input {
+  width: 100%;
+  border-radius: 8px;
+  gap:20px;
+  
+  display:flex;
+  flex-wrap:wrap;
+
+
+}
 .beer-list {
   max-width: 1200px;
   margin: 0 auto;

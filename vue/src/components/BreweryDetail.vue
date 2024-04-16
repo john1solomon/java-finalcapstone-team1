@@ -33,14 +33,17 @@
     <h3 class="beers-header">Beers on Tap</h3>
     <div v-if="beers.length > 0" class="beers-card">
      <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
-          <h4 class="beer-name">{{ beer.beerName }}</h4>
-          <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
-          <p class="beer-type">Type: {{ beer.beerType }}</p>
-          <p class="abv">ABV: {{ beer.abv }}</p>
-          <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
-          <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
-          <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
-        </div>
+        <h4 class="beer-name">{{ beer.beerName }}</h4>
+        <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
+        <p class="beer-type">Type: {{ beer.beerType }}</p>
+        <p class="abv">ABV: {{ beer.abv }}</p>
+        <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
+        <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
+        <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
+        <BButton @click="modal = !modal"> Add Review </BButton>
+        <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
+        <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+      </div>
       
     </div>
     <div v-else class="no-beers-message">See Website for Current Selection</div>
@@ -130,14 +133,21 @@ i {
 }
 
 .brewery-card {
+  width:400px;
   background-color: #333;
   color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
     text-transform: uppercase;
+    display:flex;
+  align-items: center;
+  flex-wrap:wrap;
+  text-transform: uppercase;
+    word-wrap: break-word;
 }
 
 .beers-card {
+ 
   background-color: #fff;
   display: flex;
   flex-wrap:wrap;
@@ -164,7 +174,7 @@ i {
   justify-content: space-between;
   background-color:#333;
   border-bottom: 1px solid #ddd;
-  width:200px;
+  width:300px;
   padding: 15px;
   color: #fff;
     font-family: Arial, Helvetica, sans-serif;
@@ -179,9 +189,9 @@ i {
   color: #333;
   font-family: Arial, Helvetica, sans-serif;
   font-size:large;
-    text-shadow: 0 0 10px #ffcc00 ;
-    animation:glow 1s ease infinite alternate;
-    text-transform: uppercase;
+  text-shadow: 0 0 10px #ffcc00 ;
+  animation:glow 1s ease infinite alternate;
+  text-transform: uppercase;
 
 }
 @keyframes glow {
@@ -194,7 +204,9 @@ i {
 }
 
 .card-image {
+ 
   height:200px;
+  
 }
 #checkbox-1 {
   justify-content: left;
