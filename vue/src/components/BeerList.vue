@@ -71,6 +71,16 @@ export default {
 
 
 <style scoped>
+
+.search-input {
+  width: 100%;
+  border-radius: 8px;
+  gap:20px;
+  
+  display:flex;
+  flex-wrap:wrap;
+
+}
 .beer-list {
   max-width: 1200px;
   margin: 0 auto;
