@@ -109,11 +109,12 @@
   
   /* Styles for hero section */
   .hero {
-    background-image: url('../assets/ontap.jpg');
+    background-image: url('../assets/clevelandsign.png');
     background-size: cover;
     background-position: center;
     background-color: rgba(0,0,0,0.5);
     color:ghostwhite;
+    filter:grayscale(.5);
     text-align: center;
     text-shadow:2px 2px 4px rgba(0,0,0,0.5);
     padding: 4rem 0;
