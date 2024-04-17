@@ -12,10 +12,11 @@ public class Beer {
     private BigDecimal abv;
     private int numRatings;
     private BigDecimal averageRating;
+    private BigDecimal bayesianRating;
     private LocalDate lastActive;
 
     public Beer () {}
-    public Beer(int beerId, int breweryId, String beerName, String beerDescription, String beerType, BigDecimal abv, int numRatings, BigDecimal averageRating, LocalDate lastActive) {
+    public Beer(int beerId, int breweryId, String beerName, String beerDescription, String beerType, BigDecimal abv, int numRatings, BigDecimal averageRating, BigDecimal bayesianRating, LocalDate lastActive) {
         this.beerId = beerId;
         this.breweryId = breweryId;
         this.beerName = beerName;
@@ -24,6 +25,7 @@ public class Beer {
         this.abv = abv;
         this.numRatings = numRatings;
         this.averageRating = averageRating;
+        this.bayesianRating = bayesianRating;
         this.lastActive = lastActive;
     }
 
@@ -89,6 +91,14 @@ public class Beer {
 
     public void setAverageRating(BigDecimal averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public BigDecimal getBayesianRating() {
+        return bayesianRating;
+    }
+
+    public void setBayesianRating(BigDecimal bayesianRating) {
+        this.bayesianRating = bayesianRating;
     }
 
     public LocalDate getLastActive() {

@@ -54,11 +54,11 @@ public class JdbcBreweryDao implements BreweryDao {
     @Override
     public Brewery createBrewery(Brewery brewery) {
         Brewery newBrewery = null;
-        String sql = "INSERT INTO brewery (brewery_name, brewer_name, contact_information, street_address, city, " +
+        String sql = "INSERT INTO brewery (brewery_name, brewer_username, contact_information, street_address, city, " +
                 "state_code, postal_code, logo_filename, brewery_url, menu_url, ocba_info_url, map_url) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_id;";
         try {
-            int newBreweryId = jdbcTemplate.queryForObject(sql, int.class, brewery.getBreweryName(), brewery.getBrewerName(),
+            int newBreweryId = jdbcTemplate.queryForObject(sql, int.class, brewery.getBreweryName(), brewery.getBrewerUsername(),
                     brewery.getContactInformation(),brewery.getStreetAddress(), brewery.getCity(), brewery.getStateCode(),brewery.getPostalCode(),
                     brewery.getLogoFilename(),brewery.getBreweryURL(), brewery.getMenuURL(), brewery.getOcbaInfoURL(), brewery.getMapURL());
             newBrewery = getBreweryById(newBreweryId);
@@ -74,11 +74,11 @@ public class JdbcBreweryDao implements BreweryDao {
         Brewery updatedBrewery;
 
         String sql = "UPDATE brewery " +
-                "SET brewery_name = ?, brewer_name = ?, contact_information = ?, street_address = ?, city = ?, state_code = ?, " +
+                "SET brewery_name = ?, brewer_username = ?, contact_information = ?, street_address = ?, city = ?, state_code = ?, " +
                 "postal_code = ?, logo_filename = ?, brewery_url = ?, menu_url = ?, ocba_info_url = ?, map_url = ? " +
                 "WHERE brewery_id = ?";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, brewery.getBreweryName(), brewery.getBrewerName(), brewery.getContactInformation(),
+            int rowsAffected = jdbcTemplate.update(sql, brewery.getBreweryName(), brewery.getBrewerUsername(), brewery.getContactInformation(),
                 brewery.getStreetAddress(), brewery.getCity(), brewery.getStateCode(), brewery.getPostalCode(), brewery.getLogoFilename(),
                     brewery.getBreweryURL(), brewery.getMenuURL(), brewery.getOcbaInfoURL(), brewery.getMapURL(), brewery.getBreweryId());
 
@@ -142,11 +142,11 @@ public class JdbcBreweryDao implements BreweryDao {
     @Override
     public Beer createBeer(Beer beer) {
         Beer newBeer = null;
-        String sql = "INSERT INTO brewery_beer (brewery_id, beer_name, beer_description, beer_type, abv, num_ratings, avg_rating, last_active) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_beer_id;";
+        String sql = "INSERT INTO brewery_beer (brewery_id, beer_name, beer_description, beer_type, abv, num_ratings, avg_rating, bayesian_rating, last_active) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING brewery_beer_id;";
         try {
             int newBeerId = jdbcTemplate.queryForObject(sql, int.class, beer.getBreweryId(), beer.getBeerName(), beer.getBeerDescription(),
-                    beer.getBeerType(), beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getLastActive());
+                    beer.getBeerType(), beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getBayesianRating(), beer.getLastActive());
             newBeer = getBeerById(newBeerId);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
@@ -160,11 +160,11 @@ public class JdbcBreweryDao implements BreweryDao {
         Beer updatedBeer;
 
         String sql = "UPDATE brewery_beer " +
-                "SET brewery_id = ?, beer_name = ?, beer_description = ?, beer_type = ?, abv = ?, num_ratings = ?, avg_rating = ?, last_active = ? " +
+                "SET brewery_id = ?, beer_name = ?, beer_description = ?, beer_type = ?, abv = ?, num_ratings = ?, avg_rating = ?, bayesian_rating = ?, last_active = ? " +
                 "WHERE brewery_beer_id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, beer.getBreweryId(), beer.getBeerName(), beer.getBeerDescription(), beer.getBeerType(),
-                    beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getLastActive(), beer.getBeerId());
+                    beer.getAbv(), beer.getNumRatings(), beer.getAverageRating(), beer.getBayesianRating(), beer.getLastActive(), beer.getBeerId());
 
             if (rowsAffected == 0) {
                 updatedBeer = null;
@@ -306,7 +306,7 @@ public class JdbcBreweryDao implements BreweryDao {
         Brewery brewery = new Brewery();
         brewery.setBreweryId(rs.getInt("brewery_id"));
         brewery.setBreweryName(rs.getString("brewery_name"));
-        brewery.setBrewerName(rs.getString("brewer_name"));
+        brewery.setBrewerUsername(rs.getString("brewer_username"));
         brewery.setContactInformation(rs.getString("contact_information"));
         brewery.setStreetAddress(rs.getString("street_address"));
         brewery.setCity(rs.getString("city"));
@@ -329,6 +329,7 @@ public class JdbcBreweryDao implements BreweryDao {
         beer.setAbv(rs.getBigDecimal("abv"));
         beer.setNumRatings(rs.getInt("num_ratings"));
         beer.setAverageRating(rs.getBigDecimal("avg_rating"));
+        beer.setBayesianRating(rs.getBigDecimal("bayesian_rating"));
         beer.setLastActive(rs.getDate("last_active").toLocalDate());
         return beer;
     }

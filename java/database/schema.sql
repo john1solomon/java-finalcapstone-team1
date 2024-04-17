@@ -23,7 +23,7 @@ CREATE TABLE brewer (
 CREATE TABLE brewery (
  	brewery_id SERIAL,
  	brewery_name varchar(100) NOT NULL UNIQUE,
- 	brewer_name varchar(50) NOT NULL,
+ 	brewer_username varchar(50) NOT NULL,
  	contact_information varchar(100),
  	street_address varchar(100),
  	city varchar(50),
@@ -35,7 +35,7 @@ CREATE TABLE brewery (
  	ocba_info_url varchar(200),
  	map_url varchar(1000),
  	CONSTRAINT PK_brewery PRIMARY KEY (brewery_id),
- 	CONSTRAINT FK_brewer_name FOREIGN KEY (brewer_name) REFERENCES brewer (brewer_name)
+ 	CONSTRAINT FK_brewer_username FOREIGN KEY (brewer_username) REFERENCES brewer (username)
 );
 
 CREATE TABLE brewery_beer (
