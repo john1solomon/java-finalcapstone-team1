@@ -6,9 +6,9 @@ const http = axios.create({
 
 export default {
 
-    getBeerReviews() {
-        return http.get(`/review`);
-    },
+    // getBeerReviews() {
+    //     return http.get(`/review`);
+    // },
 
     getBeerReviewsForUser(userId) {
         return http.get(`/user/${userId}/review`);
@@ -18,16 +18,20 @@ export default {
         return http.get(`/beer/${beerId}/review`);
     },
 
-    createReview(review) {
-        return http.post(`/review/`, review);
+    getBeerReviewForUserAndBeer(userId, beerId) {
+        return http.get(`/review/?userId=${userId}&beerId=${beerId}`);
     },
 
-    updateReview(review) {
-        return http.put(`/review/`, review);
+    createBeerReview(beerReview) {
+        return http.post(`/review/`, beerReview);
     },
 
-    deleteReview(review) {
-        return http.delete(`/review`, { data: review });
+    updateBeerReview(beerReview) {
+        return http.put(`/review/`, beerReview);
+    },
+
+    deleteBeerReview(userId, beerId) {
+        return http.delete(`/review/?userId=${userId}&beerId=${beerId}`);
     }
 
 }

@@ -15,10 +15,10 @@ public class BeerLoverController {
     public BeerLoverController(BeerLoverDao beerLoverDao) {
         this.beerLoverDao = beerLoverDao;
     }
-    @RequestMapping(path = "/review", method = RequestMethod.GET)
-    public List<BeerReview> getBeerReviews() {
-        return beerLoverDao.getBeerReviews();
-    }
+//    @RequestMapping(path = "/review", method = RequestMethod.GET)
+//    public List<BeerReview> getBeerReviews() {
+//        return beerLoverDao.getBeerReviews();
+//    }
     @RequestMapping(path = "/user/{userId}/review", method = RequestMethod.GET)
     public List<BeerReview> getBeerReviewsForUser(@PathVariable int userId) {
         return beerLoverDao.getBeerReviewsForUser(userId);
@@ -27,11 +27,11 @@ public class BeerLoverController {
     public List<BeerReview> getBeerReviewsForBeer(@PathVariable int beerId) {
         return beerLoverDao.getBeerReviewsForBeer(beerId);
     }
-//    @RequestMapping(path = "/review", method = RequestMethod.GET)
-//    public List<BeerReview> getBeerReviewsForUserAndBeer(@RequestParam(required = false, defaultValue="0") int userId,
-//                                           @RequestParam(required = false, defaultValue="0") int beerId) {
-//        return beerLoverDao.getBeerReviewsForUserAndBeer(userId, beerId);
-//    }
+    @RequestMapping(path = "/review", method = RequestMethod.GET)
+    public BeerReview getBeerReviewForUserAndBeer(@RequestParam(required = true) int userId,
+                                                  @RequestParam(required = true) int beerId) {
+        return beerLoverDao.getBeerReviewForUserAndBeer(userId, beerId);
+    }
     @RequestMapping(path = "/review", method = RequestMethod.POST)
     public int createBeerReview(@Valid @RequestBody BeerReview beerReview) {
         return beerLoverDao.createBeerReview(beerReview);
@@ -41,7 +41,8 @@ public class BeerLoverController {
         return beerLoverDao.updateBeerReview(beerReview);
     }
     @RequestMapping(path = "/review", method = RequestMethod.DELETE)
-    public int deleteBeerReview(@Valid @RequestBody BeerReview beerReview) {
-        return beerLoverDao.deleteBeerReview(beerReview);
+    public int deleteBeerReview(@RequestParam(required = true) int userId,
+                                @RequestParam(required = true) int beerId) {
+        return beerLoverDao.deleteBeerReview(userId, beerId);
     }
 }
