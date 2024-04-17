@@ -2,6 +2,11 @@
   <form >
     
     <div class="field">
+      <label for="breweryId">Brewery Id Number</label>
+      <input type="text" id="breweryId" name="breweryId" v-model="beer.breweryId" />
+    </div>
+
+    <div class="field">
       <label for="beerName">Beer Name</label>
       <input type="text" id="beerName" name="beerName" v-model="beer.beerName" />
     </div>
