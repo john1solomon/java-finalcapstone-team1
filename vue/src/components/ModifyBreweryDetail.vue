@@ -1,41 +1,24 @@
 <template>
   <form >
-    <div class="field">
-      <label for="beerID">Beer ID</label>
-      <input type="number" id="beerId" name="beerId" v-model="beer.beerId" />
-    </div>
-    <div class="field">
-      <label for="breweryId">Brewery ID</label>
-      <input type="number" id="breweryId" name="breweryId" v-model="beer.breweryId" />
-    </div>
+    
     <div class="field">
       <label for="beerName">Beer Name</label>
       <input type="text" id="beerName" name="beerName" v-model="beer.beerName" />
     </div>
-    <div class="field">
-      <label for="beerDescription">Description</label>
-      <textarea id="beerDescription" name="beerDescription" v-model="beer.beerDescription" />
-    </div>
+   
     <div class="field">
       <label for="beerType">Type</label>
       <input type="text" id="beerType" name="beerType" v-model="beer.beerType" />
     </div>
     <div class="field">
-      <label for="abv">Number of Ratings</label>
+      <label for="abv">ABV</label>
       <input type="number" id="abv" name="abv" v-model="beer.abv" />
-    </div>
-    <div class="field">
-      <label for="numRatings">Number of Ratings</label>
-      <input type="number" id="numRatings" name="numRatings" v-model="beer.numRatings" />
-    </div>
-    <div class="field">
-      <label for="averageRating">Avergage Rating</label>
-      <input type="number" id="numRatings" name="numRatings" v-model="beer.numRatings" />
     </div>
 
     
+
     <div class="actions">
-      <button class="btn-submit" type="submit">Save</button>
+      <button class="btn-submit" type="submit" v-on:click="createBeer">Save</button>
       <button class="btn-delete" type="button" v-if="beer.beerId" v-on:click="deleteBeer">Delete</button>
       <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
     </div>
@@ -50,15 +33,15 @@ export default {
     beer: {
       type: Object,
       default: () => ({
-        beerId: '',
-        breweryId: '',
-        beerName: '',
-        beerDescription: '',
-        beerType: '',
-        abv: '',
-        numRatings: '',
-        averageRating: '',
-        lastActive: null
+        beerId: '', // Empty string indicates new beer
+        breweryId: '',  // ID of the brewery this beer belongs to, or the Last Brewery viewed for a new beer
+        beerName: '', // Name of the beer
+        beerDescription: '', //Never used
+        beerType: '', // Type of beer
+        abv: '', // Alcohol by Volume
+        numRatings: '', // Number of ratings, Defaults to 0 for new beers
+        averageRating: '', // Average rating, Defaults to 0 for new beers
+        lastActive: new Date() // Current Date when adding a new beer
       })
     },
   },
