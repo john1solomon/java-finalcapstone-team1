@@ -46,7 +46,8 @@ CREATE TABLE brewery_beer (
 	beer_type varchar(50) NOT NULL,
 	abv decimal(4,1) NOT NULL,
 	num_ratings int NOT NULL CONSTRAINT DF_num_ratings DEFAULT(0),
-	avg_rating decimal(4,2) CONSTRAINT DF_avg_ratings DEFAULT(0),
+	avg_rating decimal(4,2) CONSTRAINT DF_avg_rating DEFAULT(0),
+	bayesian_rating decimal(4,2) CONSTRAINT DF_bayesian_rating DEFAULT(0),
 	last_active date NOT NULL,
 	CONSTRAINT PK_brewery_beer PRIMARY KEY (brewery_beer_id),
 	CONSTRAINT FK_brewery_id FOREIGN KEY (brewery_id) REFERENCES brewery (brewery_id)

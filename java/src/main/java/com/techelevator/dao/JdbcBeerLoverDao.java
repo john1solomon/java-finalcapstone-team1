@@ -17,21 +17,21 @@ public class JdbcBeerLoverDao implements BeerLoverDao{
     public JdbcBeerLoverDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    @Override
-    public List<BeerReview> getBeerReviews() {
-        List<BeerReview> beerReviews = new ArrayList<>();
-        String sql = "SELECT * FROM beer_review;";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                BeerReview beerReview = mapRowToBeerReview(results);
-                beerReviews.add(beerReview);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return beerReviews;
-    }
+//    @Override
+//    public List<BeerReview> getBeerReviews() {
+//        List<BeerReview> beerReviews = new ArrayList<>();
+//        String sql = "SELECT * FROM beer_review;";
+//        try {
+//            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+//            while (results.next()) {
+//                BeerReview beerReview = mapRowToBeerReview(results);
+//                beerReviews.add(beerReview);
+//            }
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        }
+//        return beerReviews;
+//    }
     @Override
     public List<BeerReview> getBeerReviewsForUser(int userId) {
         List<BeerReview> beerReviews = new ArrayList<>();
@@ -64,23 +64,21 @@ public class JdbcBeerLoverDao implements BeerLoverDao{
         }
         return beerReviews;
     }
-//    @Override
-//    public BeerReview getBeerReviewForUserAndBeer(int userId, int beerId) {
-//        BeerReview beerReview = null;
-//
-//        // Check the parameters.  If
-//        String sql = "SELECT * FROM beer_review WHERE user_id = ? and brewery_beer_id = ?;";
-//
-//        try {
-//            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, beerId);
-//            if (results.next()) {
-//                beerReview = mapRowToBeerReview(results);
-//            }
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        }
-//        return beerReview;
-//    }
+    @Override
+    public BeerReview getBeerReviewForUserAndBeer(int userId, int beerId) {
+        BeerReview beerReview = null;
+        String sql = "SELECT * FROM beer_review WHERE user_id = ? and brewery_beer_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, beerId);
+            if (results.next()) {
+                beerReview = mapRowToBeerReview(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return beerReview;
+    }
     @Override
     public int createBeerReview(BeerReview beerReview) {
         int numRowsCreated;
@@ -126,12 +124,12 @@ public class JdbcBeerLoverDao implements BeerLoverDao{
     }
 
     @Override
-    public int deleteBeerReview(BeerReview beerReview) {
+    public int deleteBeerReview(int userId, int beerId) {
         int numRowsDeleted;
 
         String sql = "DELETE FROM beer_review WHERE user_id = ? AND brewery_beer_id = ?;";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, beerReview.getUserId(), beerReview.getBeerId());
+            int rowsAffected = jdbcTemplate.update(sql, userId, beerId);
 
             if (rowsAffected == 0) {
                 numRowsDeleted = 0;

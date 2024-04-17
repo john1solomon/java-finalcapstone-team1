@@ -10,4 +10,5 @@ psql -U postgres -d $DATABASE -f "$BASEDIR/data_brewer.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/data_brewery.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/data_brewery_beer.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/data_brewery_event.sql" &&
+psql -U postgres -d $DATABASE -f "$BASEDIR/set_beer_ratings.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/user.sql"
