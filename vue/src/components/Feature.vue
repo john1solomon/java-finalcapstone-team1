@@ -79,8 +79,9 @@
                alt="Test 1">
             </template>
             <h1>2 PRAWN APPROACH ALL BEER POTLUCK</h1>
-            <h2>SATURDAY 420 2024</h2>
-            <h3>THEY MONEY LONGER THAN JAMES CAMERA</h3>
+            <h2>SATURDAY APRIL 20, 2024</h2>
+            <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
+            <h4>(REAR PARKING LOT)</h4>
           </BCarouselSlide>
         </BCarousel>
           </div>
@@ -129,11 +130,15 @@
     margin-bottom: 2rem;
   }
   
-  /* .events-carousel {
+  .events-carousel {
     height:50px;
     width:100%;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
   }
-  */
+ 
 
 
 
