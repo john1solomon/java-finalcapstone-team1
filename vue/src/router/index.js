@@ -10,6 +10,7 @@ import BreweryListView from '../views/BreweryListView.vue';
 import BreweryDetailView from '../views/BreweryDetailView.vue';
 import BeerListView from '../views/BeerListView.vue';
 import ModifyBreweryDetailView from '../views/ModifyBreweryDetailView.vue'
+import AddBeerModal from '../components/AddBeerModal.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -79,8 +80,8 @@ const routes = [
     meta: {
       requiresAuth: true
    
-    }
-  }
+    } 
+  },
 ];
 
 // Create the router

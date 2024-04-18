@@ -52,20 +52,11 @@
       <div class="events-carousel">
         <BCarousel id="EventsCarousel" controls indicators ride="carousel">
           
-          <BCarouselSlide>
-            <template #img>
-              <img src="@/assets/1.jpg"    width="100%"
-               alt="Test 1">
-            </template>
-            <h1>DRINKING WITH DEVS</h1>
-            <h2>FRIDAY APRIL 26, 2024</h2>
-            <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
-            <p>BYOB</p>
-          </BCarouselSlide>
+         
 
           <BCarouselSlide>
             <template #img>
-              <img src="@/assets/5.jpg" width="100%" alt="Test 2">
+              <img src="@/assets/5.jpg" width="100%" alt="Test 1">
             </template>
             <h1>TECH ELEVATOR COHORT 25 GRADUATION</h1>
             <h2>FRIDAY APRIL 19, 2024</h2>
@@ -76,13 +67,25 @@
         <BCarouselSlide>
         <template #img>
               <img src="@/assets/2prawnevent.png"    width="100%"
-               alt="Test 1">
+               alt="Test 2">
             </template>
             <h1>2 PRAWN APPROACH ALL BEER POTLUCK</h1>
             <h2>SATURDAY APRIL 20, 2024</h2>
             <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
             <h4>(REAR PARKING LOT)</h4>
           </BCarouselSlide>
+
+          <BCarouselSlide>
+            <template #img>
+              <img src="@/assets/1.jpg"    width="100%"
+               alt="Test 3">
+            </template>
+            <h1>DRINKING WITH DEVS</h1>
+            <h2>FRIDAY APRIL 26, 2024</h2>
+            <h3>7100 EUCLID AVE #140 CLE OH 44103</h3>
+            <p>BYOB</p>
+          </BCarouselSlide>
+
         </BCarousel>
           </div>
       </section>
