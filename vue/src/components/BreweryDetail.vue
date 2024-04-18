@@ -1,7 +1,7 @@
 <template>
-  <BButton @click="modal = !modal"> Add Review </BButton>
+  <!-- <BButton @click="modal = !modal"> Add Review </BButton>
   <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal> -->
 
  
   
@@ -81,6 +81,7 @@
         BreweryService.getBrewery(breweryId)
           .then(response => {
             this.brewery = response.data;
+            console.log('Brewery details:', this.brewery);
           })
           .catch(error => {
             console.error('Error fetching brewery details:', error);

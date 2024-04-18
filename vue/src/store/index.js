@@ -33,6 +33,8 @@ export function createStore(currentToken, currentUser) {
       getUserRole: state => {
         return state.user ? state.user.authorities[0].name : null;
       },
+
+
       // Getter to check if the user has the ROLE_BREWER role
       isUserBrewer: state => {
       return state.user.authorities[0].name === 'ROLE_BREWER';
