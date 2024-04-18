@@ -118,6 +118,7 @@
         BreweryService.getBrewery(breweryId)
           .then(response => {
             this.brewery = response.data;
+            console.log('Brewery details:', this.brewery);
           })
           .catch(error => {
             console.error('Error fetching brewery details:', error);
