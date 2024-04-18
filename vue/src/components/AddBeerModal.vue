@@ -61,6 +61,7 @@ export default {
   methods: {
     addBeer() {
       BreweryService.createBeer(this.beer)
+      // THIS STUFF IS NONSENSE RIGHT NOW
       .then(response => {
             if (response.status === 200) {
               this.$store.commit('SET_NOTIFICATION', {
@@ -78,6 +79,7 @@ export default {
       }
     }
     };
+    // THIS STUFF IS NONSENSE RIGHT NOW
 </script>
 
 <style scoped>
