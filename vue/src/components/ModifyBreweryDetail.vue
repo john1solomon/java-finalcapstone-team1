@@ -1,9 +1,7 @@
 <template>
   <form >
-    <div class="field">
-      <label for="beerID">Beer ID</label>
-      <input type="number" id="beerId" name="beerId" v-model="beer.beerId" />
-    </div>
+    
+    
     <div class="field">
       <label for="breweryId">Brewery ID</label>
       <input type="number" id="breweryId" name="breweryId" v-model="beer.breweryId" />
@@ -50,15 +48,11 @@ export default {
     beer: {
       type: Object,
       default: () => ({
-        beerId: '',
         breweryId: '',
         beerName: '',
-        beerDescription: '',
         beerType: '',
         abv: '',
-        numRatings: '',
-        averageRating: '',
-        lastActive: null
+       
       })
     },
   },

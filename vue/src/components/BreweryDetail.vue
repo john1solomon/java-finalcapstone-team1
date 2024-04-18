@@ -1,8 +1,9 @@
 <template>
-  <BButton @click="modal = !modal"> Add Review </BButton>
+  <!-- <BButton @click="modal = !modal"> Add Review </BButton>
   <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
-  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+  <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal> -->
 
+ 
  
   
   <div class="brewery-details">
@@ -24,9 +25,15 @@
       <a :href="brewery.menuURL" target="_blank" rel="noopener noreferrer" class="links">
         Menu
       </a>
-      <div>
+
+      <!-- <div>
         <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
-      </div>
+      </div> -->
+             <!-- // Brian added this, attempt to add buttons for crud operations -->
+      <!-- <BButton  @click="showAddBeerModal = true">Add Beer</BButton> -->
+      
+      <AddBeerModal v-if= "isBrewer" :breweryId="brewery.breweryId"/>
+      <!-- // Brian added this, attempt to add buttons for crud operations end -->
     </div>
 
     <!-- Beers on tap card -->
@@ -40,9 +47,23 @@
         <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
         <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
         <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
-        <BButton @click="modal = !modal"> Add Review </BButton>
+        <!-- <BButton @click="modal = !modal"> Add Review </BButton>
         <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
-        <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal>
+        <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal> -->
+
+        <!-- // Brian added this, attempt to add buttons for crud operations -->
+             
+      
+
+
+      <BButton v-if="isBrewer" @click="updateBeer(beer)">Update Beer</BButton>
+
+
+      <BButton v-if="isBrewer" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
+
+      <!-- // Brian added this, attempt to add buttons for crud operations end -->
+
+
       </div>
       
     </div>
@@ -53,10 +74,15 @@
   
   <script>
   import BreweryService from '@/services/BreweryService.js';
+  import AddBeerModal from '@/components/AddBeerModal.vue'
   
   export default {
+    components: {
+      AddBeerModal
+    },
     data() {
       return {
+        showAddBeerModal: false,
         status: false,
         brewery: {},
         beers: [],
@@ -70,6 +96,17 @@
         ]
       };
     },
+
+    // Brian added this, attempt to add buttons for crud operations
+    computed: {
+    isBrewer() {
+      return this.$store.getters.isUserBrewer;
+    },
+    isAdmin() {
+      return this.$store.getters.isUserAdmin;
+    }
+  },
+  // Brian added this, attempt to add buttons for crud operations end
     methods: {
       toggleStatus() {
         this.status = !this.status;
@@ -101,7 +138,40 @@
     },
     created() {
       this.fetchBreweryDetails();
+    },
+    // Brian added this, attempt to add buttons for crud operations 
+    addBeer(beer) {
+      BreweryService.createBeer(beer)
+        .then(() => {
+          this.fetchBreweryDetails(); // Refresh data
+        })
+        .catch(error => {
+          console.error('Error adding beer:', error);
+        });
+    },
+
+    updateBeer(beer) {
+      BreweryService.updateBeer(beer)
+        .then(() => {
+          this.fetchBreweryDetails(); // Refresh data
+        })
+        .catch(error => {
+          console.error('Error updating beer:', error);
+        });
+    },
+
+    deleteBeer(beerId) {
+      BreweryService.deleteBeer(beerId)
+        .then(() => {
+          this.fetchBreweryDetails(); // Refresh data
+        })
+        .catch(error => {
+          console.error('Error deleting beer:', error);
+        });
     }
+  
+  //  Brian added this, attempt to add buttons for crud operations end
+
   };
   </script>
   
