@@ -79,8 +79,8 @@ export default {
     this.beer.breweryId = this.$route.params.breweryId;
   },
   methods: {
-    addBeer(beer) {
-      BreweryService.createBeer(beer)
+    addBeer() {
+      BreweryService.createBeer(this.beer)
       console.log("Beer ID:", this.beer.beerId);
       console.log("Beer Name:", this.beer.beerName);
       console.log("Beer Description:", this.beer.beerDescription);
@@ -112,7 +112,8 @@ export default {
       console.log(this.brewery);
       return this.$store.getters.getBrewer === this.brewery.brewerUsername;
     }
-    };
+  }
+};
 </script>
 
 <style scoped>
