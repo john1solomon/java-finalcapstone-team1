@@ -63,12 +63,12 @@ export default {
         beerId:'',
         breweryId: null,
         beerName: '',
-        beerDescription:'',
+        beerDescription:null,
         beerType: '',
         abv: '',
-        numRatings: 0,
-        averageRating: 0,
-        bayesianRating: 0,
+        numRatings: '',
+        averageRating: '',
+        bayesianRating: '',
         lastActive: new Date().toISOString().split('T')[0],
         
       }
