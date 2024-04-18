@@ -1,6 +1,13 @@
 <template>
   <form >
-    
+    <div class="field">
+      <label for="beerID">Beer ID</label>
+      <input type="number" id="beerId" name="beerId" v-model="beer.beerId" />
+    </div>
+    <div class="field">
+      <label for="breweryId">Brewery ID</label>
+      <input type="number" id="breweryId" name="breweryId" v-model="beer.breweryId" />
+    </div>
     <div class="field">
       <label for="breweryId">Brewery Id Number</label>
       <input type="text" id="breweryId" name="breweryId" v-model="beer.breweryId" />
@@ -38,15 +45,15 @@ export default {
     beer: {
       type: Object,
       default: () => ({
-        beerId: '', // Empty string indicates new beer
-        breweryId: '',  // ID of the brewery this beer belongs to, or the Last Brewery viewed for a new beer
-        beerName: '', // Name of the beer
-        beerDescription: '', //Never used
-        beerType: '', // Type of beer
-        abv: '', // Alcohol by Volume
-        numRatings: '', // Number of ratings, Defaults to 0 for new beers
-        averageRating: '', // Average rating, Defaults to 0 for new beers
-        lastActive: new Date() // Current Date when adding a new beer
+        beerId: '',
+        breweryId: '',
+        beerName: '',
+        beerDescription: '',
+        beerType: '',
+        abv: '',
+        numRatings: '',
+        averageRating: '',
+        lastActive: null
       })
     },
   },
