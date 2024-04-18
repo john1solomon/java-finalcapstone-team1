@@ -1,3 +1,5 @@
+<!-- commented out all of the review button code because it was clogging up the console with errors -->
+
 <template>
   <!-- <BButton @click="modal = !modal"> Add Review </BButton>
   <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
@@ -34,6 +36,7 @@
       
       <AddBeerModal :brewery="brewery" />
       <AddBeerModal v-if= "isBrewer" :breweryId="brewery.breweryId"/>
+      
       <!-- // Brian added this, attempt to add buttons for crud operations end -->
     </div>
 
@@ -52,17 +55,14 @@
         <BModal v-model="modal" title="Add Review"> Foobar? <BFormSelect v-model="ex1Selected" :options="ex1Options" /> Dardir
         <BFormSelect v-model="ex1Selected" :options="ex1Options" size="sm" class="mt-3" /></BModal> -->
 
+        
+        
+        
         <!-- // Brian added this, attempt to add buttons for crud operations -->
-             
-      
-
-
-      <BButton v-if="isBrewer" @click="updateBeer(beer)">Update Beer</BButton>
-
-
-      <BButton v-if="isBrewer" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
-
-      <!-- // Brian added this, attempt to add buttons for crud operations end -->
+        <UpdateBeerModal v-if= "isBrewer" :breweryId="brewery.breweryId"/>
+        <!-- <BButton v-if="isBrewer" @click="updateBeer(beer)">Update Beer</BButton> -->
+        <BButton class="dbutton" v-if="isBrewer" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
+        <!-- // Brian added this, attempt to add buttons for crud operations end -->
 
 
       </div>
@@ -76,11 +76,13 @@
   <script>
   import BreweryService from '@/services/BreweryService.js';
   import AddBeerModal from '@/components/AddBeerModal.vue'
+  import UpdateBeerModal from '@/components/UpdateBeerModal.vue';
   
   export default {
     components: {
-      AddBeerModal
-    },
+    AddBeerModal,
+    UpdateBeerModal
+},
     data() {
       return {
         showAddBeerModal: false,
@@ -108,7 +110,9 @@
     }
   },
   // Brian added this, attempt to add buttons for crud operations end
-    methods: {
+   
+  
+  methods: {
       toggleStatus() {
         this.status = !this.status;
       },
@@ -119,7 +123,6 @@
         BreweryService.getBrewery(breweryId)
           .then(response => {
             this.brewery = response.data;
-            console.log('Brewery details:', this.brewery);
           })
           .catch(error => {
             console.error('Error fetching brewery details:', error);
@@ -141,16 +144,7 @@
     created() {
       this.fetchBreweryDetails();
     },
-    // Brian added this, attempt to add buttons for crud operations 
-    addBeer(beer) {
-      BreweryService.createBeer(beer)
-        .then(() => {
-          this.fetchBreweryDetails(); // Refresh data
-        })
-        .catch(error => {
-          console.error('Error adding beer:', error);
-        });
-    },
+    // Brian added this, attempt to add buttons for crud operations should probably move this logic to forms if we choose to go with 'modals'
 
     updateBeer(beer) {
       BreweryService.updateBeer(beer)
@@ -296,5 +290,7 @@ i {
 .links:hover {
     color:#ffcc00 !important;
 }
+
+
 
   </style>

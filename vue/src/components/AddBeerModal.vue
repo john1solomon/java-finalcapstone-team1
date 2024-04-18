@@ -112,10 +112,7 @@ export default {
       console.log(this.brewery);
       return this.$store.getters.getBrewer === this.brewery.brewerUsername;
     }
-      
-  }
-
-};
+    };
 </script>
 
 <style scoped>
