@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="showModal = true">Add Beer</button>
+  
+    <button v-if="brewerMatch" @click="showModal = true">Add Beer</button> 
     
     <!-- Modal -->
     <div v-if="showModal" class="modal">
@@ -34,8 +35,27 @@
 <script>
 import BreweryService from '../services/BreweryService';
 
-
 export default {
+
+  props: {
+    brewery: {
+      type: Object,
+      default: () => ({
+        breweryId: '',
+        breweryName: '',
+        breweryDescription: '',
+        brewerUsername: '',
+        contactInformation: '',
+        streetAddress: '',
+        city: '',
+        stateCode: '',
+        postalCode: '',
+        logoFilename: '',
+        lastActive: null
+      })
+    }
+  },
+  
   data() {
     return {
       showModal: false,
@@ -82,7 +102,19 @@ export default {
     //     });
     // },
     }
+    
+  },
+  computed: {
+  
+  brewerMatch() {
+      console.log("Brewer:", this.$store.getters.getBrewer);
+      console.log("Brewery brewerUsername:", this.brewery.brewerUsername);
+      console.log(this.brewery);
+      return this.$store.getters.getBrewer === this.brewery.brewerUsername;
+    }
+      
   }
+
 };
 </script>
 

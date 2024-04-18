@@ -32,6 +32,7 @@
              <!-- // Brian added this, attempt to add buttons for crud operations -->
       <!-- <BButton  @click="showAddBeerModal = true">Add Beer</BButton> -->
       
+      <AddBeerModal :brewery="brewery" />
       <AddBeerModal v-if= "isBrewer" :breweryId="brewery.breweryId"/>
       <!-- // Brian added this, attempt to add buttons for crud operations end -->
     </div>
