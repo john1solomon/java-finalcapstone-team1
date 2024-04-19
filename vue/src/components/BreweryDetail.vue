@@ -97,6 +97,7 @@
           {value: {C: '3PO'}, text: 'This is an option with object value'},
           {value: 'd', text: 'This one is disabled', disabled: true},
         ]
+        
       };
     },
 
