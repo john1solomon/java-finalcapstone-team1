@@ -43,7 +43,7 @@
     <!-- Beers on tap card -->
     <h3 class="beers-header">Beers on Tap</h3>
     <div v-if="beers.length > 0" class="beers-card">
-     <div v-for="beer in beers" :key="beer.beerId" class="beer-card">
+     <div v-for="beer in beers" :key="beer.beerId" class="beer-card" @click="selectBeer(beer.beerId)">
         <h4 class="beer-name">{{ beer.beerName }}</h4>
         <!-- <p class="beer-description">Description: {{ beer.beerDescription || 'Not available' }}</p> -->
         <p class="beer-type">Type: {{ beer.beerType }}</p>
@@ -59,7 +59,7 @@
         
         
         <!-- // Brian added this, attempt to add buttons for crud operations -->
-        <UpdateBeerModal v-if= "brewerMatch" :breweryId="brewery.breweryId"/>
+        <UpdateBeerModal v-if= "brewerMatch" :breweryId="brewery.breweryId" :beer-id="selectedBeerId"/>
         <!-- <BButton v-if="isBrewer" @click="updateBeer(beer)">Update Beer</BButton> -->
         <BButton class="dbutton" v-if="brewerMatch" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
         <!-- // Brian added this, attempt to add buttons for crud operations end -->
@@ -86,6 +86,7 @@
     data() {
       return {
         showAddBeerModal: false,
+        selectedBeerId:null,
         status: false,
         brewery: {},
         beers: [],
@@ -97,8 +98,11 @@
           {value: {C: '3PO'}, text: 'This is an option with object value'},
           {value: 'd', text: 'This one is disabled', disabled: true},
         ]
+        
       };
     },
+
+   
 
     // Brian added this, attempt to add buttons for crud operations
     computed: {
@@ -138,6 +142,11 @@
         BreweryService.getBreweryBeers(breweryId)
           .then(response => {
             this.beers = response.data;
+            
+           
+            
+            console.log(response.data);
+            console.log(this.beers[0].beerId);
           })
           .catch(error => {
             console.error('Error fetching beers on tap:', error);
@@ -147,6 +156,7 @@
         return new URL(`../assets/${filename}`, import.meta.url).href;
       },
       deleteBeer(beerId) {
+        
       BreweryService.deleteBeer(beerId)
         .then(() => {
           this.fetchBreweryDetails(); // Refresh data
@@ -154,7 +164,8 @@
         .catch(error => {
           console.error('Error deleting beer:', error);
         });
-      }
+      
+    }
     },
     created() {
       this.fetchBreweryDetails();
@@ -294,6 +305,11 @@ i {
 
 .links:hover {
     color:#ffcc00 !important;
+}
+
+.dbutton {
+  
+
 }
 
 

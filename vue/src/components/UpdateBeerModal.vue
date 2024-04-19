@@ -36,11 +36,12 @@
   
   
   export default {
+    props:['beerId', ],
     data() {
       return {
         showModal: false,
         beer: {
-          beerId:null,
+          beerId:'',
           breweryId: '',
           beerName: '',
           beerDescription:'',
@@ -55,13 +56,14 @@
       };
     },
     mounted() {
-      // Trying to access route parameter and assign it to breweryId, confirmed works.
+      
       this.beer.breweryId = this.$route.params.breweryId;
       this.beer.beerId = this.$route.params.beerId;
+      console.log(this.beer.beerID)
     },
     methods: {
     changeBeer() {
-      BreweryService.updateBeer(this.beer)
+      BreweryService.updateBeer(this.beer.beerId)
       console.log("Beer ID:", this.beer.beerId);
       console.log("Brewery ID:", this.beer.breweryId);
       console.log("Beer Name:", this.beer.beerName);

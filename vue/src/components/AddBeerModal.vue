@@ -81,26 +81,13 @@ export default {
   methods: {
     addBeer() {
       BreweryService.createBeer(this.beer)
-      console.log("Beer ID:", this.beer.beerId);
-      console.log("Beer Name:", this.beer.beerName);
-      console.log("Beer Description:", this.beer.beerDescription);
-      console.log("Brewery ID:", this.beer.breweryId);
-      console.log("Beer Type:", this.beer.beerType);
-      console.log("ABV:", this.beer.abv);
-      console.log("NumRatings:", this.beer.numRatings);
-      console.log("averageRating:", this.beer.averageRating);
-      console.log("bayesianRating:", this.beer.bayesianRating);
-      console.log("lastActive:", this.beer.lastActive);
-      console.log('The problem does not seem to be on the frontend, dog')
-    
-      
-    //     .then(() => {
-    //       this.fetchBreweryDetails(); // Refresh data
-    //     })
-    //     .catch(error => {
-    //       console.error('Error adding beer:', error);
-    //     });
-    // },
+        .then(() => {
+          this.showModal = false;
+          location.reload();
+        })
+        .catch(error => {
+          console.error('Error adding beer:', error);
+        });
     }
     
   },
