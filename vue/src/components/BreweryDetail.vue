@@ -59,9 +59,9 @@
         
         
         <!-- // Brian added this, attempt to add buttons for crud operations -->
-        <UpdateBeerModal v-if= "isBrewer" :breweryId="brewery.breweryId"/>
+        <UpdateBeerModal v-if= "brewerMatch" :breweryId="brewery.breweryId"/>
         <!-- <BButton v-if="isBrewer" @click="updateBeer(beer)">Update Beer</BButton> -->
-        <BButton class="dbutton" v-if="isBrewer" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
+        <BButton class="dbutton" v-if="brewerMatch" @click="deleteBeer(beer.beerId)">Delete Beer</BButton>
         <!-- // Brian added this, attempt to add buttons for crud operations end -->
 
 
@@ -108,6 +108,12 @@
     },
     isAdmin() {
       return this.$store.getters.isUserAdmin;
+    },
+    brewerMatch() {
+      console.log("Brewer:", this.$store.getters.getBrewer);
+      console.log("Brewery brewerUsername:", this.brewery.brewerUsername);
+      console.log(this.brewery);
+      return this.$store.getters.getBrewer === this.brewery.brewerUsername;
     }
   },
   // Brian added this, attempt to add buttons for crud operations end
@@ -139,8 +145,17 @@
           });
       },
       getLogo(filename) {
-      return new URL(`../assets/${filename}`, import.meta.url).href;
-    },
+        return new URL(`../assets/${filename}`, import.meta.url).href;
+      },
+      deleteBeer(beerId) {
+      BreweryService.deleteBeer(beerId)
+        .then(() => {
+          this.fetchBreweryDetails(); // Refresh data
+        })
+        .catch(error => {
+          console.error('Error deleting beer:', error);
+        });
+      }
     },
     created() {
       this.fetchBreweryDetails();
@@ -155,24 +170,14 @@
         .catch(error => {
           console.error('Error updating beer:', error);
         });
-    },
-
-    deleteBeer(beerId) {
-      BreweryService.deleteBeer(beerId)
-        .then(() => {
-          this.fetchBreweryDetails(); // Refresh data
-        })
-        .catch(error => {
-          console.error('Error deleting beer:', error);
-        });
     }
   
   //  Brian added this, attempt to add buttons for crud operations end
 
-  };
-  </script>
+};
+</script>
   
-  <style scoped>
+<style scoped>
 i {
   color: red;
 }
