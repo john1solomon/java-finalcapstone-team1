@@ -9,8 +9,11 @@ import RegisterView from '../views/RegisterView.vue';
 import BreweryListView from '../views/BreweryListView.vue';
 import BreweryDetailView from '../views/BreweryDetailView.vue';
 import BeerListView from '../views/BeerListView.vue';
-import ModifyBreweryDetailView from '../views/ModifyBreweryDetailView.vue'
-import UpdateBeerModal from '../components/UpdateBeerModal.vue'
+import AddBreweryView from '../views/AddBreweryView.vue';
+import EditBreweryView from '../views/EditBreweryView.vue';
+import AddBeerView from '../views/AddBeerView.vue'
+import EditBeerView from '../views/EditBeerView.vue';
+import BeerReviewView from '../views/BeerReviewView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -30,59 +33,87 @@ const routes = [
     }
   },
   {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     component: LoginView,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/logout",
-    name: "logout",
+    path: '/logout',
+    name: 'logout',
     component: LogoutView,
     meta: {
       requiresAuth: false
     }
   },
   {
-    path: "/register",
-    name: "register",
+    path: '/register',
+    name: 'register',
     component: RegisterView,
     meta: {
       requiresAuth: false
     }
   },
-{
-  path:"/beers",
-  name:"beers",
-  component:BeerListView,
-},
-
-
   {
-  path:"/breweries",
-  name: 'breweries',
-  component: BreweryListView,
-  meta: {
-    requiresAuth: false
-  }
+    path:'/beers',
+    name:'beer-list',
+    component:BeerListView
   },
-  {path:'/breweries/:breweryId',
-  name:"BreweryDetails",
-  component: BreweryDetailView,
-  },
-
   {
-    path:"/modifybeers",
-    name:"ModifyBreweryDetail",
-    component:ModifyBreweryDetailView,
+    path:'/breweries',
+    name: 'brewery-list',
+    component: BreweryListView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path:'/breweries/create',
+    name:'add-brewery',
+    component:AddBreweryView,
     meta: {
       requiresAuth: true
-   
-    } 
+    }
   },
- 
+  {
+    path:'/breweries/:breweryId/update',
+    name:'edit-brewery',
+    component:EditBreweryView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path:'/breweries/:breweryId',
+    name:'brewery-details',
+    component: BreweryDetailView
+  },
+  {
+    path:'/breweries/:breweryId/beer/create',
+    name:'add-beer',
+    component: AddBeerView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path:'/breweries/:breweryId/beer/:beerId/update',
+    name:'edit-beer',
+    component: EditBeerView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path:'/review/:breweryId/:beerId',
+    name:'beer-review',
+    component: BeerReviewView,
+    meta: {
+      requiresAuth: true
+    }
+  }
 ];
 
 // Create the router
@@ -101,7 +132,7 @@ router.beforeEach((to) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return {name: 'login'};
   }
   // Otherwise, do nothing and they'll go to their next destination
 });

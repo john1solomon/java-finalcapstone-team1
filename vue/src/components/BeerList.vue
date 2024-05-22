@@ -1,7 +1,6 @@
 <template>
   <div class="beer-list">
     <h2 class="section-title">Beers</h2>
-    
     <!-- Search input fields -->
     <div class="search-container">
       <input type="text" v-model="nameQuery" placeholder="Search by Name" class="search-input" />
@@ -9,27 +8,17 @@
       <input type="text" v-model="ratingQuery" placeholder="Search by Rating" class="search-input" />
       <input type="text" v-model="abvQuery" placeholder="Search by ABV" class="search-input" />
     </div>
-    
     <div v-if="isLoading" class="loading-message">Loading...<img src='@/assets/beerloading.gif' /></div>
     <div v-else-if="filteredBeers.length === 0" class="no-results-message">No beers found.</div>
     <div v-else class="beer-cards">
-      <div v-for="beer in filteredBeers" :key="beer.beerId" class="beer-card">
-        <h3 class="beer-name">{{ beer.beerName }}</h3>
-        <p class="beer-type">Type: {{ beer.beerType }}</p>
-        <p class="abv">ABV: {{ beer.abv }}</p>
-        <p class="num-ratings">Number of Ratings: {{ beer.numRatings }}</p>
-        <p class="average-rating">Average Rating: {{ beer.averageRating }}</p>
-        <!-- <p class="last-active">Last Active: {{ beer.lastActive }}</p> -->
-        <div>
-          <i class="fa-heart" :class="[status ? 'fa-solid' : 'fa-regular']" @click="toggleStatus"></i>
-        </div>
-      </div>
+      <beer-card v-for="beer in filteredBeers" :beer="beer" :key="beer.beerId" :fromPage="fromPage"/>
     </div>
   </div>
 </template>
 
 <script>
 import BreweryService from '../services/BreweryService.js';
+import BeerCard from '../components/BeerCard.vue';
 
 export default {
   data() {
@@ -40,13 +29,14 @@ export default {
       nameQuery:'',
       searchQuery: '',
       ratingQuery: '',
-      abvQuery: ''
+      abvQuery: '',
+      fromPage: 'BeerList'
     };
   },
   computed: {
     filteredBeers() {
       return this.beers.filter(beer => {
-        // Filter based on beerType, averageRating, and abv fields
+        // Filter based on beerType, beerName, averageRating, and abv fields
         return (
           beer.beerType.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
           beer.beerName.toLowerCase().includes(this.nameQuery.toLowerCase()) &&
@@ -56,10 +46,10 @@ export default {
       });
     }
   },
+  components: {
+    BeerCard
+  },
   methods: {
-    toggleStatus(id) {
-      this.status = !this.status;
-    },
     fetchBeers() {
       BreweryService.getBeers()
         .then(response => {
@@ -78,10 +68,7 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
-
 i {
   color: red;
 }
@@ -89,16 +76,21 @@ i {
   width: 100%;
   border-radius: 8px;
   gap:20px;
-  
   display:flex;
   flex-wrap:wrap;
-
-
 }
+
 .beer-list {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap:5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-title {
@@ -118,36 +110,8 @@ i {
 
 .beer-cards {
   display: grid;
+  margin-top: 20px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
-
-.beer-card {
-  background-color: black;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color:#f9f9f9;
-  text-transform: uppercase;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.beer-name {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.beer-description,
-.beer-type,
-.abv,
-.num-ratings,
-.average-rating,
-.last-active {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-
 </style>
-

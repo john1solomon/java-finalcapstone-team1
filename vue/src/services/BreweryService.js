@@ -30,6 +30,10 @@ export default {
     return http.get(`/beer`)
   },
 
+  getBeer(beerId) {
+    return http.get(`/beer/${beerId}`)
+  },
+
   createBeer(beer) {
     return http.post(`/beer/`, beer);
   },

@@ -24,7 +24,7 @@ public class JdbcBreweryDao implements BreweryDao {
     @Override
     public List<Brewery> getBreweries() {
         List<Brewery> breweries = new ArrayList<>();
-        String sql = "SELECT * FROM brewery;";
+        String sql = "SELECT * FROM brewery ORDER BY brewery_name;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -113,7 +113,7 @@ public class JdbcBreweryDao implements BreweryDao {
     @Override
     public List<Beer> getBeersForBrewery(int breweryId) {
         List<Beer> beers = new ArrayList<>();
-        String sql = "SELECT * FROM brewery_beer WHERE brewery_id = ?;";
+        String sql = "SELECT * FROM brewery_beer WHERE brewery_id = ? ORDER BY beer_name;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, breweryId);
             while (results.next()) {

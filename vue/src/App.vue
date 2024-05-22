@@ -1,10 +1,9 @@
-
 <template>
   <div id="capstone-app">
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link class="hidden-link" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link class="hidden-link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>
@@ -13,5 +12,4 @@
 .hidden-link {
   display: none;
 }
-
 </style>

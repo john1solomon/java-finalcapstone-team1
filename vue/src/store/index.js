@@ -26,7 +26,7 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
-      }, 
+      },
       SET_NOTIFICATION(state, notification) {
         // Clear the current notification if one exists
         if (state.notification) {
@@ -61,26 +61,29 @@ export function createStore(currentToken, currentUser) {
         state.notification = null;
       },
     },
-    
+
     // Adding this to try to tackle handling roles and permissions I will comment out below to know what garbage to remove if it doesn't work
     getters: {
       // Getter to retrieve the user's role (authorities)
       getUserRole: state => {
         return state.user ? state.user.authorities[0].name : null;
       },
-
+      getUserId: state => {
+        return state.user ? state.user.id : null;
+      },
       getBrewer: state => {
         return state.user.username;
       },
-
-
-      // Getter to check if the user has the ROLE_BREWER role
+      // Getters to check if the user has the a specific role
       isUserBrewer: state => {
-      return state.user.authorities[0].name === 'ROLE_BREWER';
+        return state.user.authorities[0].name === 'ROLE_BREWER';
       },
       isUserAdmin: state => {
         return state.user.authorities[0].name === 'ROLE_ADMIN';
-        }
+      },
+      isUserUser: state => {
+        return state.user.authorities[0].name === 'ROLE_USER';
+      }
     }
     // End of code I added to 'store'
   });

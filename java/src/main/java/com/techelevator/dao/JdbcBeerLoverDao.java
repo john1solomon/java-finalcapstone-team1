@@ -3,16 +3,18 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.BeerReview;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcBeerLoverDao implements BeerLoverDao{
+public class JdbcBeerLoverDao implements BeerLoverDao {
     private final JdbcTemplate jdbcTemplate;
     public JdbcBeerLoverDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -73,6 +75,8 @@ public class JdbcBeerLoverDao implements BeerLoverDao{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, beerId);
             if (results.next()) {
                 beerReview = mapRowToBeerReview(results);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Beer review for user not found");
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

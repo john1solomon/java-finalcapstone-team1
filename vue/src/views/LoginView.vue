@@ -71,10 +71,12 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }
-.login{
+
+.login {
   display: flex;
   text-align: center;
   justify-content: center;
@@ -82,8 +84,8 @@ label {
   font-size: x-large;
   margin-bottom: 100px;
   margin-right: 10%;
-  ;
 }
+
 .login-header {
   display: flex;
   height: 200px;
@@ -92,8 +94,8 @@ label {
   color: whitesmoke;
   justify-content: center;
   text-align: center;
-  
 }
+
 .beer-clipart {
   display: flex;
   max-width: 75%;

@@ -79,7 +79,6 @@ export default {
 </script>
 
 <style scoped>
-
 .form-input-group {
   margin-bottom: 1rem;
 }
@@ -94,7 +93,7 @@ label {
   font-size: x-large;
   margin-bottom: 100px;
   margin-right: 10%;
-  
+
 }
 .register-header {
   display: flex;
@@ -104,7 +103,6 @@ label {
   color: whitesmoke;
   justify-content: center;
   text-align: center;
-  
 }
 .beer-clipart {
   display: flex;

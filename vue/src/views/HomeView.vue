@@ -1,34 +1,26 @@
 <template>
   <div class="home-view">
     <Header/>
-     
     <Feature/>
-
     <Footer/>
-     
-    </div>
-   </template>
+  </div>
+</template>
 
 <script>
-import Header from '../components/Header.vue';
+import Header from '@/components/Header.vue';
 import Feature from '@/components/Feature.vue';
-import Footer from '../components/Footer.vue';
-
-
-
-
+import Footer from '@/components/Footer.vue';
 
 export default {
-  name: 'Homeview',
+  name: 'HomeView',
   components: {
     Header,
     Feature,
     Footer
-    
   }
-
 };
 </script>
+
 <style scoped>
 
 </style>
